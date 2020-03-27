@@ -20,6 +20,12 @@ public:
     void nyKunde();         /// legger ny kunde inni lista
    virtual void lesFraFil();
    virtual void skrivTilFil();
+   void skrivHovedData();
+   void enKunde(const int nr);
+   bool skrevetUtPaa(const int pNr) const;
+   void kundeSkrivAlt();
+  // int finnes(const int nr)const;
+  
 
 
 

@@ -5,7 +5,9 @@
 #include "enum.h"
 #include "conster.h"
 #include "Kunde.h"
+#include "Kunder.h"
 
+extern Kunder gkundene;
 using namespace std;
 
 Kunde::Kunde() { cout << "Burde aldri komme opp!";}
@@ -21,11 +23,11 @@ Kunde::Kunde(ifstream &inn, int nr) {
     getline(inn, mail);
    // type = lesType();
 
-}
+}   
 
-void Kunde::skrivTilFil(){
-    ofstream utfil("KUNDER.DTA");
-   // utfil << kNr        << endl; exception thrown???
+void Kunde::skrivTilFil(ofstream &utfil){
+    
+    utfil << kNr        << endl; 
     utfil  << navn       << endl;
     utfil << gate       << endl;
     utfil  << poststed  << endl;
@@ -55,16 +57,20 @@ void Kunde::lesData(){
     cout << "\n\t Mail: ";                 getline(cin, mail);
     tlf = lesInt("Telefon Nr: ", 10000000, 99999999); ///8-sifrede telefon
     }
-    void skrivData();
+ 
+void Kunde::skrivData() {
+   // Kunder tmpkunder;       ///gjør akkurat hva den sier
+   // tmpkunder.skrivHovedData();
+   
+    cout << "\n Navn:" << navn << ' '
+        << "\nKundenr:" << kNr << ' '
+        << tlf << ' ' << mail << ' '
+        << gate << ' ' << poststed << '\n';
 
-/*int  Kunde::finn(const string nvn) {
-    for (unsigned int i = 0; i < navn.size(); i++)
-        if (navn[i] == nvn) return (i + 1);     //  Funn!  Returnerer
-                                              //  Ikke funn, dvs. ny:
-    navn.push_back(nvn);                      //  Legger inn bakerst.
-    return navn.size();                       //  Retunerer siste indeks+1 !
-}                  //  SORTERER IKKE - ellers vil pasienter bytte indeks !!!
+}
 
-}*/
-
-
+int Kunde::hentID() {
+    return kNr;
+}
+string Kunde::hentNavn() { return navn; }
+ 

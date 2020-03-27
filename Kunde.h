@@ -26,11 +26,13 @@ public:
     Kunde(ifstream &inn, int nr);
     ~Kunde();               ///destructor
    ///andre funskjoner
-    void skrivTilFil();
+    void skrivTilFil(ofstream& utfil);
     void lesFraFil();
     void lesData();
     void skrivData();
-    int finn(const string nvn);
+    int hentID();
+   string hentNavn();
+   
 
 };
 #endif
