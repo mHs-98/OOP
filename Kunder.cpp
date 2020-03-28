@@ -10,7 +10,7 @@ using namespace std;
 
 //class Kunde;
 Kunder::Kunder() {
- kundeListe = {0};
+ kundeListe = list<Kunde*>();
     sisteNr = 0;        ///første kunde må ha nr 1
 }
 
@@ -36,8 +36,8 @@ void Kunder::skrivMeny(){
             case 'N': nyKunde();        break;
             case '1': enKunde(nr);        break;
             case 'A': kundeSkrivAlt();   break;   
-        //    case 'E': endreKunde();      break;
-        //    case 'S': slettKunde();      break;
+            case 'E': endreKunder(nr);      break;
+            case 'S': slettKunde(nr);      break;
         //    case 'O': kundeOversikt();  break;
             default: skrivMeny();
 
@@ -46,10 +46,11 @@ void Kunder::skrivMeny(){
  }
 void Kunder::nyKunde() {
    // int nr;
-    Kunde* kunden = new Kunde();        ///kunde
+    Kunde* kunden = new Kunde(++sisteNr);        ///kunde
     kunden->lesData();
     kundeListe.push_back(kunden);
-    sisteNr++;  
+    
+    
     // punshSone()
     /*#
     # lager nykunde() inni main
@@ -87,7 +88,7 @@ void Kunder::lesFraFil() {
 
  void Kunder::skrivTilFil() {
     ofstream ut("KUNDER.DTA");
-    ut << sisteNr;
+    ut << sisteNr << '\n';
     ut << kundeListe.size() << '\n';
     for (const auto& val : kundeListe)
     {
@@ -102,17 +103,24 @@ void Kunder::lesFraFil() {
  }
 
 
- void Kunder::enKunde(const int nr)
+ void Kunder::enKunde(int& nr)
  {
      
      skrivHovedData();
+     cout << '\n';
      for (const auto& val : kundeListe)     ///hent ut en kun
      {
-         if (skrevetUtPaa(nr)) {   //  Utskrevet på aktuell pasient:
-              val->skrivData();
+         cout << "Hvilken kundenummer vil du se?:\n\t";
+         cin >> nr;
+
+         if (skrevetUtPaa(nr)) {   //  Kunde finnes i lista:
+             val->skrivData();
 
          }
-
+         else {
+             cout << "Det nummeret eksisterer ikke! "
+                 << "tast et nummer mellom" << kundeListe.max_size() << " og 1";
+         }cin >> nr;
      }
  }
 
@@ -128,13 +136,53 @@ void Kunder::lesFraFil() {
  void Kunder::kundeSkrivAlt()
  {
      cout << "\n\tAlle " << kundeListe.size() << " hittil registrerte kundenavn:\n";
-     for (const auto& val : kundeListe) {
-         cout << "\t\t" << setw(2) << val + 1 << ":  " << val->hentNavn() << '\n';
-      //   if (((val + 1) % 10) == 0) {              //  Stanser for hvert 10.navn:
-             cout << "\t\t\t\t\t\tSkriv ENTER/CR .....\n";  cin.ignore();
+     int i = 0;
+     for (const auto& val : kundeListe) {       ///for hver kund i lista
+         val->skrivData();                      /// be skrive sin egen data ut på skjerm
+         if (++i % 10 == 0){            ///stanst for hver 10.kunde
+                 cout << "\t\t\t\t\t\tSkriv ENTER/CR .....\n";  cin.ignore();
+             }
          }
      }
+
  
+
+ void Kunder::endreKunder(int& nr)
+ {
+     for (const auto& val : kundeListe)     ///hent ut en kun
+     {
+         cout << "Hvilken kundenummer vil du endre?:\n\t";
+         cin >> nr;
+
+         if (skrevetUtPaa(nr)) {   //  kunden finnes
+             cout << " \n\tHer ser du naavaerende data om kunden:\n";
+
+             val->skrivData();
+             
+
+         }
+         else {
+             cout << "Det nummeret eksisterer ikke! "
+                 << "tast et nummer mellom" << kundeListe.max_size() << " og 1";
+         }
+     }
+ }
+ void Kunder::slettKunde(int& nr)
+ {
+     Kunde* tmpKunde = nullptr;     ///hjelpevariabel
+     if (!kundeListe.empty()) {
+         nr = lesInt("Kundenummer som skal slettes: ", 1, kundeListe.size());
+         if (skrevetUtPaa(nr)) {   //  Kunde finnes i lista:
+             auto it = find_if(kundeListe.begin(), kundeListe.end(),
+                 [nr](const auto& val) { return(val->hentID() == nr); });
+             if (it != kundeListe.end())       //  Fortsatt funn:
+                 kundeListe.erase(it);          //  Sletter SELVE PEKEREN.
+         }
+         cout << "\tSlettet er altså:\n";
+       tmpKunde->skrivData();           //  Skriver den som slettes.
+         delete tmpKunde;               ///så sletter kunden
+     }
+ }
  
 
 

@@ -18,9 +18,10 @@ Kunde::Kunde(int nr) {
 Kunde::Kunde(ifstream &inn, int nr) {
     inn >> kNr >> tlf; inn.ignore();
     getline(inn,navn);
+    getline(inn, mail);
     getline(inn, gate);
     getline(inn, poststed);
-    getline(inn, mail);
+    
    // type = lesType();
 
 }   
@@ -28,23 +29,19 @@ Kunde::Kunde(ifstream &inn, int nr) {
 void Kunde::skrivTilFil(ofstream &utfil){
     
     utfil << kNr        << endl; 
-    utfil  << navn       << endl;
-    utfil << gate       << endl;
-    utfil  << poststed  << endl;
     utfil << tlf        << endl;
-    utfil << mail       << endl;
-
-
-
-
+    utfil  << navn       << endl;
+    utfil << mail        << endl;
+    utfil << gate       << endl;
+    utfil << poststed << endl;
 
 }
 void  Kunde::lesFraFil() {
     ifstream inn("KUNDER.DTA");
-    if (inn)
+    if (inn)        /// sjekker filen åpen/eksisterer
     {
         cout << "Leser fra kunder.dta...";
-        inn >> kNr >> navn >> tlf; inn.ignore();
+        inn >> kNr >> tlf >> navn  ; inn.ignore();
     }
 }
 
@@ -56,6 +53,7 @@ void Kunde::lesData(){
     cout << " \n\tPostaddresse + nr: ";    getline(cin, poststed);
     cout << "\n\t Mail: ";                 getline(cin, mail);
     tlf = lesInt("Telefon Nr: ", 10000000, 99999999); ///8-sifrede telefon
+    vKunde.push_back(maxSoner); ///ikke maxsoner men egen varibel og bruk hjelpefunsjlon som henter soneNr fra Sone klassen
     }
  
 void Kunde::skrivData() {
@@ -73,4 +71,28 @@ int Kunde::hentID() {
     return kNr;
 }
 string Kunde::hentNavn() { return navn; }
- 
+
+void Kunde::endreKunde()
+{
+    char kommando;
+    //skriver ut informasjon om hvilke kommandoer som kan velges
+    cout << "\nHva har du lyst til aa endre?\n: " << endl
+        << "\nTast L for aa legge til,\nTast S for slette sonenummer," << endl
+        << "\n velg Q for aa slutte" << endl;
+    
+    kommando = lesChar("\nTa en valg\n");
+    while (kommando != 'Q') {
+        switch (kommando) {
+        case 'L':
+
+            cout << " \n\tlegg til enda en sone til";
+                break;
+        case 'S': cout << "Skriv sonen du vil slette";
+            break;
+        default: break;
+        }
+        kommando = lesChar("\n\tValg paa nytt?: \n");
+    }
+}
+
+

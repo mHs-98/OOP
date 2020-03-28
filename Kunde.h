@@ -6,12 +6,14 @@
 #include "enum.h"
 #include "conster.h"
 #include <fstream>
+#include<vector>
 using namespace std;
 
 
 class Kunde {
 
 private:
+    vector <int> vKunde;
      int kNr,           ///unike kundenummer og skal sorteres på
          tlf;       ///
     string navn,        ///kunde navn
@@ -19,6 +21,7 @@ private:
             poststed,   /// (postnr + sted)
             mail;           /// mail til vedkommende
     boligtype type;         /// 'Leilighet' eller 'Enebolig' -kundens interesse
+
 
 public:
     Kunde();            ///default constructor
@@ -32,6 +35,9 @@ public:
     void skrivData();
     int hentID();
    string hentNavn();
+   void endreKunde();
+   
+   
    
 
 };

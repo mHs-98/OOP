@@ -21,9 +21,13 @@ public:
    virtual void lesFraFil();
    virtual void skrivTilFil();
    void skrivHovedData();
-   void enKunde(const int nr);
+   void enKunde(int& nr);
    bool skrevetUtPaa(const int pNr) const;
    void kundeSkrivAlt();
+   void endreKunder(int& nr);
+   void slettKunde(int& nr);
+
+
   // int finnes(const int nr)const;
   
 
