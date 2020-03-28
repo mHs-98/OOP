@@ -26,13 +26,21 @@ public:
     Kunde();            /// Default constructor
     Kunde(int nr);       /// Copy constructor
     Kunde(ifstream &inn, int nr);
+<<<<<<< HEAD
     ~Kunde();               /// Destructor
    /// Andre funskjoner
     void skrivTilFil();
+=======
+    ~Kunde();               ///destructor
+   ///andre funskjoner
+    void skrivTilFil(ofstream& utfil);
+>>>>>>> 1607d9ed823426741582d30f156b5d4526d550f2
     void lesFraFil();
     void lesData();
     void skrivData();
-    int finn(const string nvn);
+    int hentID();
+   string hentNavn();
+   
 
 };
 

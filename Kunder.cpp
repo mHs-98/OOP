@@ -4,10 +4,11 @@
 #include "Kunder.h"
 #include "Kunde.h"
 #include <list>
+#include <iomanip>
 
 using namespace std;
 
-class Kunde;
+//class Kunde;
 Kunder::Kunder() {
     kundeListe = {0};
     sisteNr = 0;        /// Første kunde må ha nr 1
@@ -22,23 +23,33 @@ void Kunder::skrivMeny(){
          << "\tK S -  Slett en Kunde \n"
          << "\tK O  - Kunde Oversikt til \n"
          << "\tQ - Quit / avslutt\n";
+   
 }
 
  void Kunder::KundeHandling() {
     skrivMeny();
     char valg;
+<<<<<<< HEAD
     valg = lesChar("\nTa en Valg: ");
+=======
+    int nr = 0;
+    valg = lesChar("\nTa en Valg");
+>>>>>>> 1607d9ed823426741582d30f156b5d4526d550f2
     while(valg != 'Q'){
         switch(valg){
             case 'N': nyKunde();        break;
-          //  case '1': enKunde();        break;
-         //   case 'A': kundeSkrivAlt();   break;
+            case '1': enKunde(nr);        break;
+            case 'A': kundeSkrivAlt();   break;   
         //    case 'E': endreKunde();      break;
         //    case 'S': slettKunde();      break;
         //    case 'O': kundeOversikt();  break;
             default: skrivMeny();
 
+<<<<<<< HEAD
         } valg = lesChar("\nGjore en gang til?: ");
+=======
+        } valg = lesChar("\nvalg paa nytt eller 'Q'uit?");
+>>>>>>> 1607d9ed823426741582d30f156b5d4526d550f2
     }
  }
 void Kunder::nyKunde() {
@@ -46,7 +57,19 @@ void Kunder::nyKunde() {
     Kunde* kunden = new Kunde();        ///kunde
     kunden->lesData();
     kundeListe.push_back(kunden);
-    sisteNr++;
+    sisteNr++;  
+    // punshSone()
+    /*#
+    # lager nykunde() inni main
+    #kjører kunder::nykund()
+    #fram main henter sonenummre fra bruker
+    #fra main sjekkker at soneNR er valid-->vha Soner klase
+    #hvis valid: legg til sonNR inni kundedatabase vha funskjon i kunder klasse
+    alt:
+        #nykunde() tar inn parameter
+        nykunde(SOner& snr, )
+    */
+
     
 }
 
@@ -76,8 +99,50 @@ void Kunder::lesFraFil() {
     ut << kundeListe.size() << '\n';
     for (const auto& val : kundeListe)
     {
-        val->skrivTilFil();
+        val->skrivTilFil(ut);
     }
 }
+
+ void Kunder::skrivHovedData()
+ {
+     cout << " \nSå mange kunder finnes\n\t" << kundeListe.size();
+     cout << "SistNr:\t\n" << sisteNr;
+ }
+
+
+ void Kunder::enKunde(const int nr)
+ {
+     
+     skrivHovedData();
+     for (const auto& val : kundeListe)     ///hent ut en kun
+     {
+         if (skrevetUtPaa(nr)) {   //  Utskrevet på aktuell pasient:
+              val->skrivData();
+
+         }
+
+     }
+ }
+
+ bool Kunder::skrevetUtPaa(const int pNr) const
+ {
+     for (const auto& val : kundeListe) {
+         if (val->hentID() == pNr)
+             return pNr;
+     }return false;
+
+ }
+
+ void Kunder::kundeSkrivAlt()
+ {
+     cout << "\n\tAlle " << kundeListe.size() << " hittil registrerte kundenavn:\n";
+     for (const auto& val : kundeListe) {
+         cout << "\t\t" << setw(2) << val + 1 << ":  " << val->hentNavn() << '\n';
+      //   if (((val + 1) % 10) == 0) {              //  Stanser for hvert 10.navn:
+             cout << "\t\t\t\t\t\tSkriv ENTER/CR .....\n";  cin.ignore();
+         }
+     }
+ 
+ 
 
 
