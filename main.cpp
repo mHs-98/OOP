@@ -24,8 +24,8 @@ char valg;
     while(valg != 'Q'){
         switch(valg){
             case 'K': gkundene.KundeHandling();   break;
-            //case 'S': case 'O':
-              //  gsonene.handling)(valg);    break;
+            // case 'S': case 'O':
+               // gSoner.SoneHandling)(valg);    break;
             default: skrivMeny();
 
         }valg = lesChar("Vagl på nytt?");

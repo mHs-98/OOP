@@ -1,5 +1,5 @@
-#include<iostream>
-#include<fstream>
+#include <iostream>
+#include <fstream>
 #include "LesData3.h"
 #include "Kunder.h"
 #include "Kunde.h"
@@ -9,8 +9,8 @@ using namespace std;
 
 class Kunde;
 Kunder::Kunder() {
- kundeListe = {0};
-    sisteNr = 0;        ///første kunde må ha nr 1
+    kundeListe = {0};
+    sisteNr = 0;        /// Første kunde må ha nr 1
 }
 
 void Kunder::skrivMeny(){
@@ -27,7 +27,7 @@ void Kunder::skrivMeny(){
  void Kunder::KundeHandling() {
     skrivMeny();
     char valg;
-    valg = lesChar("\nTa en Valg");
+    valg = lesChar("\nTa en Valg: ");
     while(valg != 'Q'){
         switch(valg){
             case 'N': nyKunde();        break;
@@ -38,7 +38,7 @@ void Kunder::skrivMeny(){
         //    case 'O': kundeOversikt();  break;
             default: skrivMeny();
 
-        } valg = lesChar("\nGjore en gang til?");
+        } valg = lesChar("\nGjore en gang til?: ");
     }
  }
 void Kunder::nyKunde() {
