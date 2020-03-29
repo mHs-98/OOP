@@ -1,27 +1,31 @@
-#pragma once
-#ifndef __BOLIG_H                  //  Ensures that this file will be
-#define __BOLIG_H                  //  included only ONCE in each file
-
-#include <iostream>
-#include <fstream>
-#include <vector>
+#ifndef __BOLIG_H
+#define __BOLIG_H
 #include <string>
-#include "LesData3.h"
-
-using namespace std;
+#include "enum.h"
 
 
 class Bolig {
-
 private:
-    int oppdragNr;
-    string  saksbehandler,
-            eierNavn,
-            addresse,
-            beskrivelse;
+	int oppdragsNr,					// et unikt oppdrags-/bolignummer
+		innlagtDato,				// Inlagt dato i systemet
+		byggeår,
+		bruttoAreal,
+		antallSoverom,
+		angittPris;
+
+	std::string navnsaksb,			// Navnet på interne saksbehandleren hos eiendomsfirmaet.
+		navnEier,					// Navnet på nåværende eir
+		gateAdresse,				// gate + nr
+		postAdresse,				// postnumber + sted
+		boligBeskriv;				//		LATER
+	boligtype boligtype;
+	
 public:
-    Bolig();
-    Bolig(ifstream &inn);
+	Bolig();
+	Bolig(const int nr) { oppdragsNr = nr;};
+	int		hentID() { return oppdragsNr;  }
+	void	lesData();
+	void	skrivData() const;
 };
 
 #endif
