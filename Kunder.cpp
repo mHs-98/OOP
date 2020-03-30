@@ -10,13 +10,9 @@ using namespace std;
 
 //class Kunde;
 Kunder::Kunder() {
-<<<<<<< HEAD
+
  kundeListe = list<Kunde*>();
     sisteNr = 0;        ///første kunde må ha nr 1
-=======
-    kundeListe = {0};
-    sisteNr = 0;        /// Første kunde må ha nr 1
->>>>>>> bbaf92c40d830574fac79e46e6d28c3967367477
 }
 
 void Kunder::skrivMeny(){
@@ -34,13 +30,11 @@ void Kunder::skrivMeny(){
  void Kunder::KundeHandling() {
     skrivMeny();
     char valg;
-<<<<<<< HEAD
     valg = lesChar("\nTa en Valg: ");
-=======
     int nr = 0;
     valg = lesChar("\nTa en Valg");
->>>>>>> 1607d9ed823426741582d30f156b5d4526d550f2
-    while(valg != 'Q'){
+
+while(valg != 'Q'){
         switch(valg){
             case 'N': nyKunde();        break;
             case '1': enKunde(nr);        break;
@@ -50,11 +44,8 @@ void Kunder::skrivMeny(){
         //    case 'O': kundeOversikt();  break;
             default: skrivMeny();
 
-<<<<<<< HEAD
-        } valg = lesChar("\nGjore en gang til?: ");
-=======
         } valg = lesChar("\nvalg paa nytt eller 'Q'uit?");
->>>>>>> 1607d9ed823426741582d30f156b5d4526d550f2
+
     }
  }
 void Kunder::nyKunde() {
