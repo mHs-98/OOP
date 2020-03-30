@@ -8,26 +8,23 @@
 #include <map>
 #include "LesData3.h"
 
-using namespace std;
-
 
 class Sone;
 class Soner {
 private:
-    int sisteSNr;   /// forløpende økende automatisk nummmerering av alle nye oppdrag/bolig
-    map <int, Sone*> gSoner;    ///alle aktuelle unikt nummererte Soner
+    int sisteSNr;   /// Forløpende økende automatisk nummmerering av alle nye oppdrag/bolig
+    std::map <int, Sone*> gSoner;    /// Alle aktuelle unikt nummererte Soner
 
 public:
     Soner();
-    Soner(int sisNr);
-    ~Soner();
-    void nySone(const int sNr);
-    void skrivMeny();
-    void soneHandling();
-    void skrivEnSone(const int sNr);
+    Soner(int sisNr) {sisNr = sisteSNr;}
+    //~Soner();
     void skrivAlleSoner();
+    void nySone(const int sNr);
     void endreSone(const int sNr);
     void slettSone(const int sNr);
+    void soneHandling();
+    void skrivMeny();
 };
 
 

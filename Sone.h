@@ -1,4 +1,5 @@
 #pragma once
+
 #ifndef __SONE_H                  //  Ensures that this file will be
 #define __SONE_H                  //  included only ONCE in each file
 
@@ -7,28 +8,27 @@
 #include <vector>
 #include "LesData3.h"
 
-using namespace std;
-
 
 class Bolig;
 
 class Sone {
 private:
     int unikSNr;                  /// Unik sonenummer
-    string soneBeskrivelse;       /// Kort beskrivelse av sonen
-    vector <Bolig*> gBoliger;     /// Alle boligene til salgs i sonen
+    std::string soneBeskrivelse;       /// Kort beskrivelse av sonen
+    std::vector <Bolig*> gBoliger;     /// Alle boligene til salgs i sonen
 
 public:
-
-   /// Andre funskjoner
+    Sone() {unikSNr = 1; soneBeskrivelse = "Eksempel Beskrivelse";}
     void skrivTilFil();
     void lesFraFil();
     void lesBeskrivelse();
     void skrivData();
-    int finn(const string nvn);
+    void skrivEnSone(const int sNr);
+    int finn(const std::string nvn);
     int hentSoneNr() {
         return unikSNr;
     }
+    
 };
 
 #endif
