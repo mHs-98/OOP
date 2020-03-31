@@ -94,6 +94,18 @@ void Soner::skrivAlleSoner() {
     }
 }
 
+bool Soner::finnes( int sNr) const      //hjelpefunsjon som sikrer at sonenummeret eksisterer!
+{
+   /* auto it1 = gSoner.find(sNr);     //  Prøver å finne vha. medlemsfunksjon.
+    if (it1 != gSoner.end()) {      //  Funn i (<map>):
+        return sNr;               //  Returnerer selve nummeret
+    }  return false;
+    */
+    for (const auto& val : gSoner) {
+        if ((val.second)->hentSoneNr() == sNr )
+            return sNr;
+    }return false;
+}
 /** 
  * 
  */ 

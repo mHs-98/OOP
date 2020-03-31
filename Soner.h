@@ -24,6 +24,7 @@ public:
     void soneHandling();
     void skrivMeny();
     void hentEnSone();
+    bool finnes( int sNr) const;
 };
 
 
