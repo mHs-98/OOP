@@ -26,6 +26,7 @@ public:
 	int		hentID() { return oppdragsNr; }
 	void	lesData();
 	void	skrivData() const;
+	void nyOppdrag();
 };
 
 #endif

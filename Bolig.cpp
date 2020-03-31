@@ -7,6 +7,7 @@
 #include "LesData3.h"
 #include <iostream>
 #include <vector>
+#include "enum.h"
 using namespace std;
 
 Bolig bolig;
@@ -32,15 +33,34 @@ void Bolig::lesData() {
     cout << "OppdragsNr:\t " << oppdragsNr << '\n';
     cout << "BoligType:\t";
     switch (boligtype) {
-    //case 'Leilighet': cout << "Leilighet\n";       break;
-    //case 'Enebolig': cout << "Enebolig\n";         break;
+    case Leilighet: cout << "Leilighet\n";       break;
+    case Enebolig: cout << "Enebolig\n";         break;
     }
     cout << "Innlagt Dato:\t " << innlagtDato << '\n';
     cout << "Bygge år:\t " << byggeår << '\n';
     cout << "Anall Soverom:\t " << antallSoverom << '\n';
     cout << "Bolig Beskrivelse:\t " << boligBeskriv << '\n';
-}
-*/
+}*/
 
+void Bolig::nyOppdrag()
+{
+    Bolig* nyBolig = nullptr;              //  Peker til nye aktuell ene/bolig.
+   // Enebolig* nyEnebolig = nullptr;
+    char boligType;                         //  'A' eller 'S'.
+                                //  Teller opp og skriver nytt unikt kjørernr:
+    cout << "\tNy oppdrag har nr." << ++oppdragsNr << ":\n";
+
+    do {                                     //  Leser ALLTID 'A' eller 'S':
+        boligType = lesChar("\tL(eilighet) eller E(nebolig)");
+    } while (boligType != 'L' && boligType != 'E');
+
+    switch (boligType) {                    //  Lager en ny aktuell kjører:
+    case 'L':  nyBolig = new Bolig(oppdragsNr);     break;
+    case 'E':  nyBolig = new Enebolig(oppdragsNr);  break;
+    }
+
+    nyBolig->lesData();                   //  Leser kjørerens datamedlemmer.
+    
+}
 
 

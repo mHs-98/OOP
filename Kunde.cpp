@@ -8,6 +8,7 @@
 #include "Kunder.h"
 
 extern Kunder gkundene;
+extern Soner gsonene;
 using namespace std;
 
 Kunde::Kunde() { cout << "Burde aldri komme opp!";}
@@ -29,8 +30,8 @@ Kunde::Kunde(ifstream &inn, int nr) {
 void Kunde::skrivTilFil(ofstream &utfil){
     
     utfil << kNr        << endl; 
+    utfil << navn << endl;
     utfil << tlf        << endl;
-    utfil  << navn       << endl;
     utfil << mail        << endl;
     utfil << gate       << endl;
     utfil << poststed << endl;
@@ -41,23 +42,32 @@ void  Kunde::lesFraFil() {
     if (inn)        /// sjekker filen åpen/eksisterer
     {
         cout << "Leser fra kunder.dta...";
-        inn >> kNr >> tlf >> navn  ; inn.ignore();
+        inn >> kNr >> navn >> tlf
+            >>mail >> gate >> poststed; inn.ignore();
     }
 }
 
 
 
-void Kunde::lesData(){
+void Kunde::lesData() {
     int soneNr;
     cout << " \n\tNavn: ";                 getline(cin, navn);
     cout << "\n\tAddresse + nr: ";         getline(cin, gate);
     cout << " \n\tPostaddresse + nr: ";    getline(cin, poststed);
     cout << "\n\t Mail: ";                 getline(cin, mail);
     tlf = lesInt("Telefon Nr: ", 10000000, 99999999); ///8-sifrede telefon
-    soneNr = lesInt("Hvilken sone er du interessert initielt: ", 1, maxSoner);
-    vKunde.push_back(soneNr); ///ikke helt korrekt?? men egen varibel og bruk hjelpefunsjlon som henter soneNr fra Sone klassen??
-    //public hjelpesfundjon i sone som kalles på fra kund si n lesdata().
-    }
+
+    do {
+        soneNr = lesInt("Hvilken sone er du interessert initielt: ", 1, maxSoner);
+        if (gsonene.finnes(soneNr)) {
+            vKunde.push_back(soneNr); ///ikke helt korrekt?? men egen varibel og bruk hjelpefunsjlon som henter soneNr fra Sone klassen??
+            //public hjelpesfundjon i sone som kalles på fra kund si n lesdata().
+        }
+        else cout << "Sonenummern finnnes ikke"
+            << "tast en sonemmuner mellom 1 og ";
+    } while (!gsonene.finnes(soneNr));
+}
+
  
 void Kunde::skrivData() {
    // Kunder tmpkunder;       ///gjør akkurat hva den sier

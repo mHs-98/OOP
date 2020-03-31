@@ -6,6 +6,10 @@
 #include "conster.h"
 #include "Bolig.h"
 #include <map>
+#include "Enebolig.h"
+
+extern Soner gsonene;
+//extern Bolig boliger;
 
 using namespace std;
 
@@ -14,7 +18,12 @@ using namespace std;
 void Sone::lesBeskrivelse() {
     cout << "\n\nSkriv en kort beskrivelse om sonen: ";
     getline(cin, soneBeskrivelse); //Leser inn sonens beskrivelse
+
 }
+Sone::Sone(int nr) {
+    unikSNr = nr;
+     soneBeskrivelse = "Eksempel Beskrivelse";
+};
 
 void Sone::skrivTilFil() {
 
@@ -27,13 +36,11 @@ void Sone::skrivData() {
     cout << "\t";
     cout << "\n\tSone Nr: " << unikSNr
         << "\tBeskrivelse: " << soneBeskrivelse;
-    << "\tBeskrivelse: " << soneBeskrivelse;
 
 }
 
 /// @todo: Lage Bolig::skrevetPaa() i Bolig.h
 void Sone::skrivEnSone(int sNr) { // g gjennom boliger og skrive ut en bolig
-void Sone::skrivEnSone(int sNr) { // gå gjennom boliger og skrive ut en bolig
     /*if (!gBoliger.empty()) {
         sNr = lesInt("Sone nr: ", 1, maxSoner);
         for (const auto val : gBoliger) {
@@ -41,9 +48,6 @@ void Sone::skrivEnSone(int sNr) { // gå gjennom boliger og skrive ut en bolig
                 val.second->skrivEnOppdrag(sNr);
                 if ( (sNr % 5) != 0) {
                 cout << "\n\n\tTrykk Paa ENTER for  fortsette";
-                val.second->skrivEnOppdrag(sNr); 
-                if ( (sNr % 5) != 0) {
-                cout << "\n\n\tTrykk Paa ENTER for å fortsette";
                 cin.get();
             }
             }
@@ -57,5 +61,17 @@ void Sone::skrivEnSone(int sNr) { // gå gjennom boliger og skrive ut en bolig
     */
 }
 
+void Sone::nyOppdrag(int& snNr)
+{
+    Bolig*      nyBolig      = nullptr;              //  Peker til nye aktuell ene/bolig.
+    
+    do {
+        snNr = lesInt("Hvilken sone skal oppdraget opprettes i: ", 1, maxSoner);
+        if (gsonene.finnes(snNr)) {
+            nyBolig->nyOppdrag();       //kaller på nyOppdrag fra Bolig
+            gBoliger.push_back(nyBolig); 
+        }
+        else cout << "Sonenummern finnnes ikke"
+            << "tast en sonemmuner mellom 1 og ";
+    } while (!gsonene.finnes(snNr));
 }
-
