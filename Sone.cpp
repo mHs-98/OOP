@@ -27,11 +27,13 @@ void Sone::skrivData() {
     cout << "\t";
     cout << "\n\tSone Nr: " << unikSNr
         << "\tBeskrivelse: " << soneBeskrivelse;
+    << "\tBeskrivelse: " << soneBeskrivelse;
 
 }
 
 /// @todo: Lage Bolig::skrevetPaa() i Bolig.h
 void Sone::skrivEnSone(int sNr) { // g gjennom boliger og skrive ut en bolig
+void Sone::skrivEnSone(int sNr) { // gå gjennom boliger og skrive ut en bolig
     /*if (!gBoliger.empty()) {
         sNr = lesInt("Sone nr: ", 1, maxSoner);
         for (const auto val : gBoliger) {
@@ -39,6 +41,9 @@ void Sone::skrivEnSone(int sNr) { // g gjennom boliger og skrive ut en bolig
                 val.second->skrivEnOppdrag(sNr);
                 if ( (sNr % 5) != 0) {
                 cout << "\n\n\tTrykk Paa ENTER for  fortsette";
+                val.second->skrivEnOppdrag(sNr); 
+                if ( (sNr % 5) != 0) {
+                cout << "\n\n\tTrykk Paa ENTER for å fortsette";
                 cin.get();
             }
             }
@@ -51,3 +56,6 @@ void Sone::skrivEnSone(int sNr) { // g gjennom boliger og skrive ut en bolig
     }
     */
 }
+
+}
+

@@ -19,6 +19,7 @@ private:
 
 public:
     Sone() { unikSNr = 0; soneBeskrivelse = "Eksempel Beskrivelse"; } //unikSnr telles fra 1
+    Sone() {unikSNr = 1; soneBeskrivelse = "Eksempel Beskrivelse";}
     void skrivTilFil();
     void lesFraFil();
     void lesBeskrivelse();

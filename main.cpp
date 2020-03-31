@@ -4,17 +4,19 @@
 #include "Kunde.h"
 #include "Kunder.h"
 #include "Soner.h"
+#include "Sone.h"
 
 using namespace std;
 
 Soner gsonene;
+Soner gSoner;
 Kunder gkundene;
 
 
 int main(){
 
 char valg;
-   // gsonene.lesFrafil();
+    //gsonene.lesFrafil();
     gkundene.lesFraFil();
 
     skrivMeny();
@@ -26,9 +28,11 @@ char valg;
             case 'K': gkundene.KundeHandling();   break;
             case 'S': case 'O':
                 gsonene.soneHandling();    break;
+
+                gSoner.soneHandling();    break;
             default: skrivMeny();
 
-        }valg = lesChar("Vagl på nytt?");
+        }valg = lesChar("Valg på nytt?");
     }
     gkundene.skrivTilFil();
 return 0;
