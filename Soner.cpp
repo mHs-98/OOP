@@ -6,106 +6,83 @@
 #include "conster.h"
 #include <map>
 
-//extern Sone gBoliger;
 using namespace std;
 
 
 class Sone;
+
+/**
+ * 
+ */ 
 Soner::Soner() {
     gSoner.insert(pair <int, Sone*>(sisteSNr++, new Sone));
-
-    sisteSNr = 0;        /// Første Sone maa ha nr 1
+    sisteSNr = 0;        /// Første kunde må ha nr 1
 }
 
+/**
+ * 
+ */ 
+Soner::~Soner() {
 
+}
+
+/**
+ * 
+ */ 
 void Soner::skrivMeny() {
-<<<<<<< HEAD
-    cout << "\tS N - Ny Sone\n"
-        << "\tS 1 - Skriv ALT om EN Sone\n"
-        << "\tS A - Skriv ALT om alle Sonene\n"
-        << "\tS E - Endre en Sone\n"
-        << "\tS S - Slett en Sone\n"
-        << "\tQ   - Avslutt programmet\n";
    cout  << "\tS N - Ny Sone\n"
          << "\tS 1 - Skriv ALT om EN Sone\n"
          << "\tS A - Skriv ALT om alle Sonene\n"
-         << "\tS E - Endre en Sone\n"
-         << "\tS S - Slett en Sone\n"
-         << "\tQ   - Avslutt programmet\n";
+         << "\tQ   - Avslutt Soner\n";
 }
 
-
+/**
+ * 
+ */ 
 void Soner::soneHandling() {
     skrivMeny();
     char valg;
-    valg = lesChar("\nValg: ");
+    valg = lesChar("\nValg");
     int iNr = 1;
-
-    while (valg != 'Q') {
-        switch (valg) {
-        case 'N': nySone(iNr);          break;
-            //case '1': skrivEnSone(iNr);     break;
-        case 'A': skrivAlleSoner();     break;
-            //case 'E': endreSone(iNr);       break;
-            //case 'S': slettSone(iNr);       break;
-        default: skrivMeny();
-
-        }  
+    
     while (valg != 'Q') {
         switch(valg){
             case 'N': nySone(iNr);          break;
-            //case '1': skrivEnSone(iNr);     break;
+            //case '1': hentEnSone();         break;
             case 'A': skrivAlleSoner();     break;
             //case 'E': endreSone(iNr);       break;
             //case 'S': slettSone(iNr);       break;
             default: skrivMeny();
-
-        } 
-        valg = lesChar("\nValg: ");
+        }
+        valg = lesChar("\nValg");
     }
 }
 
+/**
+ * 
+ */ 
 void Soner::nySone(int sNr)
 {
     Sone* nySone;
-
-    //for (const auto & val : gSoner) {
     sNr = lesInt("SoneNr: ", 1, maxSoner);
-    cout << "\nSone Nr " << sNr << endl;
-    //if (val.second->hentSoneNr() == sNr) {
+    cout << "\n\nSone Nr " << sNr << endl;
     auto it = gSoner.find(sNr);   // Iterator som leter etter sNr
-    if (it == gSoner.end()) {    // soneNummer ble ikke funnet
+    if (it == gSoner.end()) {    // Leter etter duplikater
         nySone = new Sone;
-        nySone->lesBeskrivelse();        // Leser data til ny sone
+        nySone->lesBeskrivelse();        // Leser beskrivelse til ny sone
         gSoner[sNr] = nySone;   // Sender data til data strukturen
     }
-    else                        // sonenummer eksisterer
+    else
         cout << "Duplikater tillates ikke!";
-    //}
-//}
 }
 
-void Soner::skrivAlleSoner() {
-    if (!gSoner.empty()) { /// Sjekker om datastrukturen er tom
-        sNr = lesInt("SoneNr: ", 1, maxSoner);
-        cout << "\nSone Nr " << sNr << endl;
-        //if (val.second->hentSoneNr() == sNr) {
-            auto it = gSoner.find(sNr);   // Iterator som leter etter sNr
-            if (it == gSoner.end()) {    // Leter etter duplikater
-                nySone = new Sone;
-                nySone->lesBeskrivelse();        // Leser data til ny sone
-                gSoner[sNr] = nySone;   // Sender data til data strukturen
-            }
-            else
-                cout << "Duplikater tillates ikke!";
-        //}
-    //}
-}
-
+/**
+ * 
+ */ 
 void Soner::skrivAlleSoner() {
     if(!gSoner.empty()) { /// Sjekker om datastrukturen er tom
         cout << "\n\tSkriver alle Sonene...\n";
-        for (const auto& val : gSoner) {
+        for (const auto & val : gSoner) {
             cout << "\n\n\t" << val.first;
             (val.second)->Sone::skrivData();
             cout << endl; /// Alle skriver seg selv på skjermen.
@@ -117,23 +94,10 @@ void Soner::skrivAlleSoner() {
     }
 }
 
-
-void Soner::endreSone(const int sNr) {
-
-}
-
-void Soner::slettSone(const int sNr) {
-
-bool Soner::finnes( int sNr) const      //hjelpefunsjon som sikrer at sonenummeret eksisterer!
-{
-   /* auto it1 = gSoner.find(sNr);     //  Prøver å finne vha. medlemsfunksjon.
-    if (it1 != gSoner.end()) {      //  Funn i (<map>):
-        return sNr;               //  Returnerer selve nummeret
-    }  return false;
-    */
-    for (const auto& val : gSoner) {
-        if ((val.second)->hentSoneNr() == sNr )
-            return sNr;
-    }return false;
-    
+/** 
+ * 
+ */ 
+void Soner::hentEnSone() {
+    Sone temp; int nr = 0;
+    temp.skrivEnSone(nr); // Makes a temp from the other class and sends it to the function
 }

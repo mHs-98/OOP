@@ -18,8 +18,7 @@ private:
     std::vector <Bolig*> gBoliger;     /// Alle boligene til salgs i sonen
 
 public:
-    Sone() { unikSNr = 0; soneBeskrivelse = "Eksempel Beskrivelse"; } //unikSnr telles fra 1
-    Sone() {unikSNr = 1; soneBeskrivelse = "Eksempel Beskrivelse";}
+    Sone() {unikSNr = 0; soneBeskrivelse = "Eksempel Beskrivelse";}
     void skrivTilFil();
     void lesFraFil();
     void lesBeskrivelse();
@@ -29,8 +28,7 @@ public:
     int hentSoneNr() {
         return unikSNr;
     }
-
+    
 };
 
 #endif
-

@@ -9,43 +9,60 @@
 
 using namespace std;
 
-
-
+/**
+ * Leser inn sonens beskrivelse
+ */ 
 void Sone::lesBeskrivelse() {
-    cout << "\n\nSkriv en kort beskrivelse om sonen: ";
-    getline(cin, soneBeskrivelse); //Leser inn sonens beskrivelse
+    cout << "\nSkriv en kort beskrivelse om sonen: ";
+    getline(cin, soneBeskrivelse);
 }
 
+/**
+ * 
+ * 
+ * 
+ */ 
 void Sone::skrivTilFil() {
-
+    
 }
+
+/**
+ * 
+ * 
+ * 
+ */ 
 void Sone::lesFraFil() {
 
 }
 
+/**
+ * 
+ * 
+ * 
+ */ 
 void Sone::skrivData() {
     cout << "\t";
-    cout << "\n\tSone Nr: " << unikSNr
-        << "\tBeskrivelse: " << soneBeskrivelse;
-    << "\tBeskrivelse: " << soneBeskrivelse;
-
+    cout << "\tBeskrivelse: " << soneBeskrivelse;
 }
 
-/// @todo: Lage Bolig::skrevetPaa() i Bolig.h
-void Sone::skrivEnSone(int sNr) { // g gjennom boliger og skrive ut en bolig
-void Sone::skrivEnSone(int sNr) { // gå gjennom boliger og skrive ut en bolig
-    /*if (!gBoliger.empty()) {
-        sNr = lesInt("Sone nr: ", 1, maxSoner);
-        for (const auto val : gBoliger) {
-            if (val.second->skrevetUtPaa(sNr)) {
-                val.second->skrivEnOppdrag(sNr);
-                if ( (sNr % 5) != 0) {
-                cout << "\n\n\tTrykk Paa ENTER for  fortsette";
-                val.second->skrivEnOppdrag(sNr); 
-                if ( (sNr % 5) != 0) {
-                cout << "\n\n\tTrykk Paa ENTER for å fortsette";
+/**
+ * Går gjennom alle boliger og skriver ut en bolig
+ * 
+ * @see: Bolig.h, Bolig.cpp
+ */ 
+void Sone::skrivEnSone(int sNr) {
+    /*
+    if (!gBoliger.empty()) {
+        int tmp = 0;   /// Variable for å telle hvor mange boliger ble utskrevet
+        sNr = lesInt("Sone nr: ", 1, maxSoner); /// Vedkommende SoneNr
+        for (const auto val : gBoliger) {   /// Går gjennom boliger
+            if (gBoliger[sNr]->skrevetUtPaa(sNr)) {  /// Om SoneNr er lik OppdragsNr
+                gBoliger[sNr]->skrivData();         
+                tmp++;
+                if ((tmp % 5) == 0) {        /// Stans utskrift hver 5 Oppdrag
+                cout << "\n\n\tTrykk På ENTER for å fortsette"; 
                 cin.get();
-            }
+                }
             }
         }
 
@@ -56,6 +73,3 @@ void Sone::skrivEnSone(int sNr) { // gå gjennom boliger og skrive ut en bolig
     }
     */
 }
-
-}
-
