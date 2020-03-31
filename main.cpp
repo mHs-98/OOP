@@ -7,7 +7,7 @@
 
 using namespace std;
 
-//Soner gsonene;
+Soner gsonene;
 Kunder gkundene;
 
 
@@ -24,8 +24,8 @@ char valg;
     while(valg != 'Q'){
         switch(valg){
             case 'K': gkundene.KundeHandling();   break;
-            // case 'S': case 'O':
-               // gSoner.SoneHandling)(valg);    break;
+            case 'S': case 'O':
+                gsonene.soneHandling();    break;
             default: skrivMeny();
 
         }valg = lesChar("Vagl på nytt?");

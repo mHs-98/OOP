@@ -1,16 +1,19 @@
-#include <iostream>
-#include <fstream>
+#include<iostream>
+#include<fstream>
 #include "LesData3.h"
 #include "Kunder.h"
 #include "Kunde.h"
+#include "Sone.h"
+#include "Soner.h"
 #include <list>
 #include <iomanip>
 
 using namespace std;
 
+extern Soner gsonene;
+
 //class Kunde;
 Kunder::Kunder() {
-
  kundeListe = list<Kunde*>();
     sisteNr = 0;        ///første kunde må ha nr 1
 }
@@ -30,11 +33,9 @@ void Kunder::skrivMeny(){
  void Kunder::KundeHandling() {
     skrivMeny();
     char valg;
-    valg = lesChar("\nTa en Valg: ");
     int nr = 0;
     valg = lesChar("\nTa en Valg");
-
-while(valg != 'Q'){
+    while(valg != 'Q'){
         switch(valg){
             case 'N': nyKunde();        break;
             case '1': enKunde(nr);        break;
@@ -45,32 +46,17 @@ while(valg != 'Q'){
             default: skrivMeny();
 
         } valg = lesChar("\nvalg paa nytt eller 'Q'uit?");
-
     }
  }
 void Kunder::nyKunde() {
    // int nr;
     Kunde* kunden = new Kunde(++sisteNr);        ///kunde
+   
     kunden->lesData();
-    kundeListe.push_back(kunden);
-    
-    
-    // punshSone()
-    /*#
-    # lager nykunde() inni main
-    #kjører kunder::nykund()
-    #fram main henter sonenummre fra bruker
-    #fra main sjekkker at soneNR er valid-->vha Soner klase
-    #hvis valid: legg til sonNR inni kundedatabase vha funskjon i kunder klasse
-    alt:
-        #nykunde() tar inn parameter
-        nykunde(SOner& snr, )
-    */
-
-    
+    kundeListe.push_back(kunden);       //nyeste kunden legges bakerst i lista 
 }
 
-void Kunder::lesFraFil() {
+void Kunder::lesFraFil() {      //leser kundens data fra fil
     ifstream innfil("KUNDER.DTA");
     innfil >> sisteNr; innfil.ignore();
     Kunde* kunden;      ///hjepe-variabel
@@ -82,8 +68,6 @@ void Kunder::lesFraFil() {
     while(!innfil.eof()){   ///mer å lese
             kunden = new Kunde(innfil, kundeNr);
             kundeListe.push_back(kunden); ///legg kunden inni lista
-
-
     }
 
     }

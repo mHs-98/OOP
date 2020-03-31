@@ -19,11 +19,11 @@ private:
 		postAdresse,				// postnumber + sted
 		boligBeskriv;				//		LATER
 	boligtype boligtype;
-	
+
 public:
 	Bolig();
-	Bolig(const int nr) { oppdragsNr = nr;};
-	int		hentID() { return oppdragsNr;  }
+	Bolig(const int nr) { oppdragsNr = nr; };
+	int		hentID() { return oppdragsNr; }
 	void	lesData();
 	void	skrivData() const;
 };

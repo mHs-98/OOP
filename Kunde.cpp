@@ -48,12 +48,15 @@ void  Kunde::lesFraFil() {
 
 
 void Kunde::lesData(){
+    int soneNr;
     cout << " \n\tNavn: ";                 getline(cin, navn);
     cout << "\n\tAddresse + nr: ";         getline(cin, gate);
     cout << " \n\tPostaddresse + nr: ";    getline(cin, poststed);
     cout << "\n\t Mail: ";                 getline(cin, mail);
     tlf = lesInt("Telefon Nr: ", 10000000, 99999999); ///8-sifrede telefon
-    vKunde.push_back(maxSoner); ///ikke maxsoner men egen varibel og bruk hjelpefunsjlon som henter soneNr fra Sone klassen
+    soneNr = lesInt("Hvilken sone er du interessert initielt: ", 1, maxSoner);
+    vKunde.push_back(soneNr); ///ikke helt korrekt?? men egen varibel og bruk hjelpefunsjlon som henter soneNr fra Sone klassen??
+    //public hjelpesfundjon i sone som kalles på fra kund si n lesdata().
     }
  
 void Kunde::skrivData() {
