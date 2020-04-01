@@ -7,9 +7,10 @@
 #include <map>
 
 using namespace std;
-//Sone gsone;
+
 Soner::Soner() {
     sisteSNr = 0;        // Første Sone maa ha nr 1
+    gSoner.insert(pair <int, Sone*>(sisteSNr, new Sone));
 }
 
 
@@ -107,6 +108,45 @@ void Soner::skrivAlleSoner() {
     }
 }
 
+/**
+ * 
+ * 
+ * 
+ */ 
+void Soner::skrivTilFil() {
+    ofstream utFil("SONER.DTA");
+    cout << "\n\tSkriver ut til filen 'SONER.DTA'...\n\n";
+    if (utFil) {
+        for (const auto & val : gSoner) {
+            utFil << val.first;
+            (val.second)->skrivTilFil(utFil); // Alle skriver seg selv til fil.
+        }
+        utFil.close();
+    }
+    else
+        cout << "\n\tFinner ikke filen 'SONER.DTA'! \n\n";
+}
+
+/**
+ * 
+ * 
+ * 
+ */ 
+void Soner::lesFraFil() {
+    ifstream innFil("SONER.DTA"); int sNr;
+    cout << "\n\tLeser fra filen 'SONER.DTA'...\n\n";
+    if (innFil) {
+        innFil >> sNr;
+        innFil.ignore();
+        while (!innFil.eof()) {
+            gSoner.insert(pair <int, Sone*>(sNr, new Sone(innFil)));
+        }
+        innFil.close();
+    }
+    else
+        cout << "\n\tFinner ikke filen 'SONER.DTA'!\n\n";
+    
+}
 
 bool Soner::finnes( int sNr) const      //hjelpefunsjon som sikrer at sonenummeret eksisterer!
 {

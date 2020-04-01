@@ -8,7 +8,7 @@
  *
  *
  *   @file     MAIN.CPP
- *   @author   Mahamed Said, Abdisalan Hussein, Elias Touil, NTNU Studenter.
+ *   @author   Mohamed Said, Abdisalan Hussein, Elias Touil, NTNU Studenter.
  */
 
 #include <iostream>

@@ -13,7 +13,21 @@ extern Soner gsonene;
 
 using namespace std;
 
+/**
+ * Leser inn klassens innhold fra filen
+ * @param in - Filobjektet egne data leses inn fra
+ */ 
+Sone::Sone(ifstream & in) {
+    getline(in, soneBeskrivelse);
+}
 
+/**
+ * 
+ * 
+ */ 
+void Sone::skrivTilFil(ofstream & ut) const {
+    ut << unikSNr << "\t" << soneBeskrivelse << endl;
+}
 
 void Sone::lesBeskrivelse() {
     cout << "\n\nSkriv en kort beskrivelse om sonen: ";
@@ -24,13 +38,6 @@ Sone::Sone(int nr) {
     unikSNr = nr;
      soneBeskrivelse = "Eksempel Beskrivelse";
 };
-
-void Sone::skrivTilFil() {
-
-}
-void Sone::lesFraFil() {
-
-}
 
 void Sone::skrivData() {
     cout << "\t";
