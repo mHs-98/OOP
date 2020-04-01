@@ -8,6 +8,7 @@
 #include <iostream>
 #include <vector>
 #include "enum.h"
+#include <fstream>
 using namespace std;
 
 Bolig bolig;
@@ -43,3 +44,16 @@ void Bolig::lesData() {
 }*/
 
 
+void Bolig::skrivTilFil(std::ofstream & ut) {
+   
+   ut << oppdragsNr << ' ' << innlagtDato << ' ' << byggeår << '\n'
+        << bruttoAreal << ' ' << antallSoverom << ' ' << angittPris << '\n'
+        << navnsaksb << ' ' << navnEier << ' ' << gateAdresse << ' '
+        << postAdresse << ' ' << boligBeskriv << '\n';
+
+        switch (boligtype) {                        
+        case leilighet:   ut << "Leilighet";    break; 
+        case enebolig:  ut << "Enebolig";    break;
+         }
+    
+}

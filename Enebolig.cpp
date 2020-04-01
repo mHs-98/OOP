@@ -26,6 +26,10 @@ void Enebolig::skrivData() {
     else { std::cout << "Tomten er:\t" << " selveiet" << '\n'; }
 }
 
+void Enebolig::skrivTilFil(std::ofstream& ut) {
+    ut << areal << ' ' << festetomt << '\n';
+}
+
 Enebolig::~Enebolig()
 {
 }

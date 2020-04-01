@@ -14,6 +14,7 @@ public:
 	Enebolig(const int nr);
 	void	lesData();
 	void	skrivData();
+	void	skrivTilFil(std::ofstream& ut);
 	~Enebolig();
 };
 

@@ -1,7 +1,10 @@
 #ifndef __BOLIG_H
 #define __BOLIG_H
 #include <string>
+#include <iostream>
+#include <fstream>
 #include "enum.h"
+
 
 
 class Bolig {
@@ -26,6 +29,7 @@ public:
 	int		hentID() { return oppdragsNr; }
 	void	lesData();
 	void	skrivData() const;
+	void	skrivTilFil(std::ofstream & ut);
 	void nyOppdrag();
 };
 
