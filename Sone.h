@@ -26,9 +26,8 @@ public:
     void skrivEnSone(const int sNr);
     int finn(const std::string nvn);
     int hentSoneNr() {
-        return unikSNr;
-    }
-    void nyOppdrag(int& snNr);
+        return unikSNr;}
+    void lagnyOppdrag(int nr);
    
 
 };

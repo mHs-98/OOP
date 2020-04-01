@@ -24,8 +24,12 @@ public:
     void endreSone(const int sNr);
     void slettSone(const int sNr);
     void soneHandling();
-    void skrivMeny();
+    void soneMeny();
     bool finnes( int sNr) const;
+    void nyOppdrag(int& snNr);
+    void oppdragMeny();
+
+
 };
 
 

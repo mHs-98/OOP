@@ -5,8 +5,7 @@
 #include "Sone.h"
 #include "conster.h"
 #include <map>
-/*
-//extern Sone gBoliger;
+
 using namespace std;
 //Sone gsone;
 Soner::Soner() {
@@ -14,36 +13,64 @@ Soner::Soner() {
 }
 
 
-void Soner::skrivMeny() {
+void Soner::soneMeny() {
     cout << "\tS N - Ny Sone\n"
         << "\tS 1 - Skriv ALT om EN Sone\n"
         << "\tS A - Skriv ALT om alle Sonene\n"
-        << "\tS E - Endre en Sone\n"
-        << "\tS S - Slett en Sone\n"
         << "\tQ   - Avslutt programmet\n";
 }
 
 
 void Soner::soneHandling() {
-    skrivMeny();
-    char valg;
-    valg = lesChar("\nValg: ");
-    int iNr = 0;
-    //Sone tmpSone;
-    while (valg != 'Q') {
-        switch (valg) {
-        case 'N': nySone(iNr);          break;
-            //case '1': skrivEnSone(iNr);     break;
-        case 'A': skrivAlleSoner();     break;
-            //case 'E': endreSone(iNr);       break;
-            //case 'S': slettSone(iNr);       break;
-        case 'O':gsone.nyOppdrag(iNr);         break;
-        default: skrivMeny();
 
-        }
+    //if etterfølgt av en switch! 
+    char ch;
+    cout << "Du befinner du deg paa ingen-manns-land\n"
+        << "Tast 'S'one eller 'O'ppdrag";
+    cin >> ch;
+    if (ch = 'S')
+    {
+        soneMeny();
+        char valg;
         valg = lesChar("\nValg: ");
+        int iNr = 0;
+        //Sone tmpSone;
+        while (valg != 'Q') {
+            switch (valg) {
+            case 'N': nySone(iNr);          break;
+                //case '1': skrivEnSone(iNr);     break;
+            case 'A': skrivAlleSoner();     break;
+                //case 'E': endreSone(iNr);       break;
+                //case 'S': slettSone(iNr);       break;
+            default: soneMeny();
+
+            }
+        }
     }
-}*/
+    else if (ch = 'O')
+    {
+        oppdragMeny();
+        char valg;
+        valg = lesChar("\nValg: ");
+        int iNr = 0;
+
+        while (valg != 'Q') {
+            switch (valg) {
+            case 'N': nyOppdrag(iNr);          break;
+                //  case 'S': slettOppdrag();     break;
+            default: oppdragMeny();
+
+            }valg = lesChar("Gjøre paa nytt eller tast Q\n");
+        }
+    }
+    else
+    {
+        cout << "Det var ikke riktig valg prøv paa nytt!";
+
+
+
+    }
+}
 
 void Soner::nySone(int sNr)
 {
@@ -61,9 +88,9 @@ void Soner::nySone(int sNr)
     }
     else                        // sonenummer eksisterer
         cout << "Duplikater tillates ikke!";
-    //}
-//}
-}
+    }
+
+
 
 void Soner::skrivAlleSoner() {
     if (!gSoner.empty()) { /// Sjekker om datastrukturen er tom
@@ -90,7 +117,30 @@ bool Soner::finnes( int sNr) const      //hjelpefunsjon som sikrer at sonenummer
     */
     for (const auto& val : gSoner) {
         if ((val.second)->hentSoneNr() == sNr )
-            return sNr;
+            return true;
     }return false;
     
 }
+
+void Soner::nyOppdrag(int& snNr)
+{
+        snNr = lesInt("Hvilken sone skal oppdraget opprettes i: ", 1, maxSoner);
+        auto it = gSoner.find(snNr);   // Iterator som leter etter sNr
+        if (it != gSoner.end()) {    // soneNummer ble  funnet
+            it->second->lagnyOppdrag(++sisteSNr);
+        }
+        else                        // sonenummer eksisterer
+            cout << "Duplikater tillates ikke!";
+}
+
+void Soner::oppdragMeny()
+{
+    cout << "Velkommen til Oppdrag-verden!\n"
+        << "Her er mulighetenen du har:\n\t"
+        << " N: Oprett ny oppdrag\n"
+        << "1<nr>: Skriv alt om EN gitt oppdrag\n"
+        << "S<nr>: Slett EN gitt oppdrag\n";
+}
+    
+
+

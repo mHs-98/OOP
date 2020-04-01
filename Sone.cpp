@@ -61,7 +61,28 @@ void Sone::skrivEnSone(int sNr) { // g gjennom boliger og skrive ut en bolig
     */
 }
 
-void Sone::nyOppdrag(int& snNr)
+void Sone::lagnyOppdrag(int nr)
+{
+    Bolig* nyBolig = nullptr;
+   // nyBolig->nyOppdrag();       //kaller paa funskjone i bolig klassen
+                                  //veldig knotete aa gjøre det paa men, maa man saa man!
+
+    char boligType;
+
+    do {                                     //  Leser ALLTID 'A' eller 'S':
+        boligType = lesChar("\tL(eilighet) eller E(nebolig)");
+    } while (boligType != 'L' && boligType != 'E');
+
+    switch (boligType) {                    //  Lager en ny aktuell kjører:
+    case 'L':  nyBolig = new Bolig(nr);     break;
+    case 'E':  nyBolig = new Enebolig(nr);  break;
+    }
+
+    nyBolig->lesData();
+    gBoliger.push_back(nyBolig);//ny oppdraget legges bakerst i vektoren
+}
+
+/*void Sone::nyOppdrag(int& snNr)
 {
     Bolig*      nyBolig      = nullptr;              //  Peker til nye aktuell ene/bolig.
     
@@ -74,4 +95,4 @@ void Sone::nyOppdrag(int& snNr)
         else cout << "Sonenummern finnnes ikke"
             << "tast en sonemmuner mellom 1 og ";
     } while (!gsonene.finnes(snNr));
-}
+}*/

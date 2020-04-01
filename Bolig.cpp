@@ -42,25 +42,4 @@ void Bolig::lesData() {
     cout << "Bolig Beskrivelse:\t " << boligBeskriv << '\n';
 }*/
 
-void Bolig::nyOppdrag()
-{
-    Bolig* nyBolig = nullptr;              //  Peker til nye aktuell ene/bolig.
-   // Enebolig* nyEnebolig = nullptr;
-    char boligType;                         //  'A' eller 'S'.
-                                //  Teller opp og skriver nytt unikt kjørernr:
-    cout << "\tNy oppdrag har nr." << ++oppdragsNr << ":\n";
-
-    do {                                     //  Leser ALLTID 'A' eller 'S':
-        boligType = lesChar("\tL(eilighet) eller E(nebolig)");
-    } while (boligType != 'L' && boligType != 'E');
-
-    switch (boligType) {                    //  Lager en ny aktuell kjører:
-    case 'L':  nyBolig = new Bolig(oppdragsNr);     break;
-    case 'E':  nyBolig = new Enebolig(oppdragsNr);  break;
-    }
-
-    nyBolig->lesData();                   //  Leser kjørerens datamedlemmer.
-    
-}
-
 
