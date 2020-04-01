@@ -1,39 +1,32 @@
-#pragma once
 #ifndef __KUNDER_H                  //  Ensures that this file will be
-#define __KUNDER_H                  //    included only ONCE in each file.
-#include "LesData3.h"
-#include <fstream>
-#include <iostream>
-#include <list>
-#include "Soner.h"
-#include "Sone.h"
+#define __KUNDER_H                  //  included only ONCE in each file.
 
-using namespace std;
-class Kunde;
+#include <iostream>
+#include <fstream>
+#include <list>
+#include "Kunde.h"
+
+
 class Kunder{
 private:
-    list<Kunde*> kundeListe;
+    std::list<Kunde*> kundeListe;           //  list med pekere til 'Kunde'
     int sisteNr;
 public:
-    Kunder();           ///default connstructor
-    Kunder(ifstream &inn);  ///leser inn egne data vha constructor
-    void skrivMeny();
-    void KundeHandling();
-    void nyKunde();         /// legger ny kunde inni lista
-   virtual void lesFraFil();
-   virtual void skrivTilFil();
-   void skrivHovedData();
-   void enKunde(int& nr);
-   bool skrevetUtPaa(const int pNr) const;
-   void kundeSkrivAlt();
-   void endreKunder(int& nr);
-   void slettKunde(int& nr);
+    Kunder();                               //default connstructor
+    Kunder(std::ifstream &inn);             //leser inn egne data vha constructor
+    void    skrivMeny();
+    void    KundeHandling();
+    void    nyKunde();                      // legger ny kunde inni lista
+    virtual void lesFraFil(); 
+    virtual void skrivTilFil(); 
+    void    skrivHovedData();
+    void    enKunde(int& nr);
+    bool    skrevetUtPaa(const int pNr) const;
+    void    kundeSkrivAlt();
+    void    endreKunder(int& nr);
+    void    slettKunde(int& nr);
+    
+    //int   finnes(const int nr)const;
+ };
 
-
-  // int finnes(const int nr)const;
-  
-
-
-
-};
 #endif // __KUNDER_H
