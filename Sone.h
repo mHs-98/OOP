@@ -19,10 +19,10 @@ private:
 public:
     Sone(); //unikSnr telles fra 1
     Sone(int nr);
-    void skrivTilFil();
-    void lesFraFil();
+    Sone(std::ifstream & in);
     void lesBeskrivelse();
     void skrivData();
+    void skrivTilFil(std::ofstream & ut) const;
     void skrivEnSone(const int sNr);
     int finn(const std::string nvn);
     int hentSoneNr() {

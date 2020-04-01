@@ -28,6 +28,8 @@ public:
     bool finnes( int sNr) const;
     void nyOppdrag(int& snNr);
     void oppdragMeny();
+    void skrivTilFil();
+    void lesFraFil();
 
 
 };
