@@ -7,6 +7,7 @@
 #include "Bolig.h"
 #include <map>
 #include "Enebolig.h"
+#include <string>
 
 extern Soner gsonene;
 //extern Bolig boliger;
@@ -17,8 +18,12 @@ using namespace std;
  * Leser inn klassens innhold fra filen
  * @param in - Filobjektet egne data leses inn fra
  */ 
-Sone::Sone(ifstream & in) {
+Sone::Sone(int snr,  ifstream& in) {
+    unikSNr = snr;
     getline(in, soneBeskrivelse);
+    for (auto val : gBoliger) {
+        val->lesFraFil();
+    }
 }
 
 /**
@@ -27,6 +32,9 @@ Sone::Sone(ifstream & in) {
  */ 
 void Sone::skrivTilFil(ofstream & ut) const {
     ut << unikSNr << "\t" << soneBeskrivelse << endl;
+    for (auto val : gBoliger) {
+        val->skrivTilFil(ut);
+    }
 }
 
 void Sone::lesBeskrivelse() {
@@ -48,11 +56,21 @@ void Sone::skrivData() {
 
 /// @todo: Lage Bolig::skrevetPaa() i Bolig.h
 void Sone::skrivEnSone(int sNr) { // g gjennom boliger og skrive ut en bolig
-    /*if (!gBoliger.empty()) {
+   
+    for (auto val : gBoliger) {
+        val->skrivData();
+    }
+}
+
+
+
+
+
+   /* if (!gBoliger.empty()) {
         sNr = lesInt("Sone nr: ", 1, maxSoner);
         for (const auto val : gBoliger) {
-            if (val.second->skrevetUtPaa(sNr)) {
-                val.second->skrivEnOppdrag(sNr);
+            if (val->hentID->skrevetUtPaa(sNr)) {
+                val->hentID->skrivEnOppdrag(sNr);
                 if ( (sNr % 5) != 0) {
                 cout << "\n\n\tTrykk Paa ENTER for  fortsette";
                 cin.get();
@@ -65,8 +83,8 @@ void Sone::skrivEnSone(int sNr) { // g gjennom boliger og skrive ut en bolig
     {
         cout << "\n\tIngen data av Soner fantes!\n\n";
     }
-    */
-}
+    
+}*/
 
 void Sone::lagnyOppdrag(int nr)
 {
@@ -87,6 +105,24 @@ void Sone::lagnyOppdrag(int nr)
 
     nyBolig->lesData();
     gBoliger.push_back(nyBolig);//ny oppdraget legges bakerst i vektoren
+}
+
+void Sone::enOppdrag(int nr)
+{
+    for (auto val : gBoliger) { //lop alle oppdragr
+        if(nr ==val->hentID())        // hvis riktgi opdranummer
+            val->skrivData();   //skriv sin egen data?
+    }
+
+}
+
+void Sone::enkundeoversikt(ofstream& ut)
+{
+    
+    for (auto val : gBoliger) {
+        val->skrivTilFil(ut);
+    }
+
 }
 
 /*void Sone::nyOppdrag(int& snNr)

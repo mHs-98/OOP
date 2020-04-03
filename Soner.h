@@ -9,6 +9,7 @@
 #include "LesData3.h"
 #include "Sone.h"
 #include "Soner.h"
+#include <string>
 
 
 class Soner {
@@ -30,6 +31,12 @@ public:
     void oppdragMeny();
     void skrivTilFil();
     void lesFraFil();
+    void hentEnsone();
+    void hentEnOPPdrag();
+    void soneforKOversikt(int nr, std::ofstream& ut);
+    //void kundOversikt(int nr);
+
+
 
 
 };

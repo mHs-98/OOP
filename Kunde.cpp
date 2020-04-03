@@ -6,23 +6,28 @@
 #include "conster.h"
 #include "Kunde.h"
 #include "Kunder.h"
+#include "Soner.h"
+#include "Sone.h"
+#include <string>
 
-extern Kunder gkundene;
-extern Soner gsonene;
+extern Soner gSonene;
 using namespace std;
 
 Kunde::Kunde() { cout << "Burde aldri komme opp!";}
 Kunde::Kunde(int nr) {
+
     kNr = nr;
     tlf = 0;
 }
 Kunde::Kunde(ifstream &inn, int nr) {
-    inn >> kNr >> tlf; inn.ignore();
-    getline(inn,navn);
+    cout << "inni kunde-constructor";
+    kNr = nr; inn.ignore();
+    getline(inn, navn);
+    inn >> tlf; inn.ignore();
     getline(inn, mail);
     getline(inn, gate);
     getline(inn, poststed);
-    
+    cout << "nederst i constructr";
    // type = lesType();
 
 }   
@@ -30,22 +35,24 @@ Kunde::Kunde(ifstream &inn, int nr) {
 void Kunde::skrivTilFil(ofstream &utfil){
     
     utfil << kNr        << endl; 
-    utfil << navn << endl;
+    utfil << navn       << endl;
     utfil << tlf        << endl;
-    utfil << mail        << endl;
+    utfil << mail       << endl;
     utfil << gate       << endl;
-    utfil << poststed << endl;
+    utfil << poststed    << endl;
 
 }
-void  Kunde::lesFraFil() {
+
+//trenger egenltig ike!
+/*void  Kunde::lesFraFil() {
     ifstream inn("KUNDER.DTA");
     if (inn)        /// sjekker filen åpen/eksisterer
     {
         cout << "Leser fra kunder.dta...";
-        inn >> kNr >> navn >> tlf
-            >>mail >> gate >> poststed; inn.ignore();
+        inn >> kNr; inn.ignore(); getline(inn, navn); inn >> tlf; inn.ignore();
+        getline(inn, mail); getline(inn, gate); getline(inn, poststed); inn.ignore();
     }
-}
+}*/
 
 
 
@@ -59,13 +66,13 @@ void Kunde::lesData() {
 
     do {
         soneNr = lesInt("Hvilken sone er du interessert initielt: ", 1, maxSoner);
-        if (gsonene.finnes(soneNr)) {
+        if (gSonene.finnes(soneNr)) {
             vKunde.push_back(soneNr); ///ikke helt korrekt?? men egen varibel og bruk hjelpefunsjlon som henter soneNr fra Sone klassen??
             //public hjelpesfundjon i sone som kalles på fra kund si n lesdata().
         }
         else cout << "Sonenummern finnnes ikke"
             << "tast en sonemmuner mellom 1 og ";
-    } while (!gsonene.finnes(soneNr));
+    } while (!gSonene.finnes(soneNr));
 }
 
  
@@ -85,7 +92,7 @@ int Kunde::hentID() {
 }
 string Kunde::hentNavn() { return navn; }
 
-void Kunde::endreKunde()
+/*void Kunde::endreKunde()
 {
     char kommando;
     //skriver ut informasjon om hvilke kommandoer som kan velges
@@ -106,6 +113,65 @@ void Kunde::endreKunde()
         }
         kommando = lesChar("\n\tValg paa nytt?: \n");
     }
+}*/
+
+void Kunde::hentenKundoversikt(ofstream& ut)
+{
+    cout << "\ninni kunde::hentekundeoverskit()\n";
+    for (auto val : vKunde) {
+        if (gSonene.finnes(val)) {
+            gSonene.soneforKOversikt(val, ut);
+
+        }
+        else
+        {
+            cout << "Noe feil!";
+        }
+        
+    }
 }
+
+void Kunde::soneEndre()
+{
+    int soneNr;
+    do {
+        soneNr = lesInt("Hvilken sone er du interessert aa legge til: ", 1, maxSoner);
+         if (gSonene.finnes(soneNr)) {
+        vKunde.push_back(soneNr); ///ikke helt korrekt?? men egen varibel og bruk hjelpefunsjlon som henter soneNr fra Sone klassen??
+        //public hjelpesfundjon i sone som kalles på fra kund si n lesdata().
+          }//
+      //  else cout << "Sonenummern finnnes ikke"
+          //  << "tast en sonemmuner mellom 1 og ";
+         cout << gSonene.finnes(soneNr);
+     } while (!gSonene.finnes(soneNr));
+     cout << "\nut av while\n";
+}
+void Kunde::slettSone()
+{
+
+    int soneNr;
+    do {
+        soneNr = lesInt("Hvilken sone er du interessert aa legge til: ", 1, maxSoner);
+        if (gSonene.finnes(soneNr)) {//sjekker at sonenummer virkelig finnes
+            cout << "\netter if\n";
+            auto it = vKunde.begin(); //gaar gjennom vektoren
+            cout << "\nforan while\n";
+            while (it != vKunde.end())
+            {
+                if (*it == soneNr)      //peker paa sonenummer som skal slettes
+                {
+                    vKunde.erase(it);   //sletter den!
+
+                }
+
+            }
+
+        }
+        else cout << "Sonenummern finnnes ikke"
+            << "tast en sonemmuner mellom 1 og ";
+    } while (!gSonene.finnes(soneNr));
+}
+
+
 
 

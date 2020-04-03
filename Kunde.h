@@ -9,13 +9,15 @@
 #include<vector>
 #include "Sone.h"
 #include "Soner.h"
+#include <string>
+
 
 using namespace std;
 
 class Kunde {
 
 private:
-    vector <int> vKunde;
+    vector <int> vKunde;    //sonenummr kinden er interseeert i
      int kNr,           ///unike kundenummer og skal sorteres på
          tlf;       ///
     string navn,        ///kunde navn
@@ -37,7 +39,14 @@ public:
     void skrivData();
     int hentID();
    string hentNavn();
-   void endreKunde();
+  // void endreKunde();
+   void hentenKundoversikt(ofstream& ut);
+   void soneEndre();
+   void slettSone();
+
+
+   
+
    
    
    

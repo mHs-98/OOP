@@ -7,14 +7,14 @@
 
 using namespace std;
 
-Soner gSoner;
+Soner gSonene;
 Kunder gkundene;
 
 
 int main(){
 
 char valg;
-    gSoner.lesFraFil();
+    gSonene.lesFraFil();
     gkundene.lesFraFil();
 
     skrivMeny();
@@ -25,11 +25,12 @@ char valg;
         switch(valg){
             case 'K': gkundene.KundeHandling();   break;
             case 'S': case 'O':
-                gSoner.soneHandling();    break;
+                gSonene.soneHandling();    break;
             default: skrivMeny();
 
         }valg = lesChar("Vagl på nytt?");
     }
     gkundene.skrivTilFil();
+    gSonene.skrivTilFil();
 return 0;
 }

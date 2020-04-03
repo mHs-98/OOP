@@ -5,12 +5,13 @@
 #include "Sone.h"
 #include "conster.h"
 #include <map>
+#include <string>
 
 using namespace std;
 
 Soner::Soner() {
     sisteSNr = 0;        // Første Sone maa ha nr 1
-    gSoner.insert(pair <int, Sone*>(sisteSNr, new Sone));
+   // gSoner.insert(pair <int, Sone*>(sisteSNr, new Sone));
 }
 
 
@@ -25,53 +26,50 @@ void Soner::soneMeny() {
 void Soner::soneHandling() {
 
     //if etterfølgt av en switch! 
-    char ch;
+    char valg;
+    int iNr = 0;
     cout << "Du befinner du deg paa ingen-manns-land\n"
         << "Tast 'S'one eller 'O'ppdrag";
-    cin >> ch;
-    if (ch = 'S')
+    valg = lesChar("\nValg: ");
+    while (valg != 'Q') 
+  
     {
-        soneMeny();
-        char valg;
-        valg = lesChar("\nValg: ");
-        int iNr = 0;
-        //Sone tmpSone;
-        while (valg != 'Q') {
-            switch (valg) {
-            case 'N': nySone(iNr);          break;
-                //case '1': skrivEnSone(iNr);     break;
+      
+        switch (valg) {
+        case 'S':
+            soneMeny();
+            valg = lesChar("\nValg: ");
+            switch (valg)
+            {
+            case 'N': nySone(iNr);
+                break;
             case 'A': skrivAlleSoner();     break;
-                //case 'E': endreSone(iNr);       break;
-                //case 'S': slettSone(iNr);       break;
+            case '1':hentEnsone();          break;
+
             default: soneMeny();
 
-            }
-        }
-    }
-    else if (ch = 'O')
-    {
-        oppdragMeny();
-        char valg;
-        valg = lesChar("\nValg: ");
-        int iNr = 0;
+                break;
+            }break;
 
-        while (valg != 'Q') {
-            switch (valg) {
+        case 'O':
+            oppdragMeny();
+            valg = lesChar("\nValg: ");
+            switch (valg)
+            {
             case 'N': nyOppdrag(iNr);          break;
-                //  case 'S': slettOppdrag();     break;
+           //  case 'S': slettOppdrag();     break;
+            case '1': hentEnOPPdrag();
+
             default: oppdragMeny();
 
-            }valg = lesChar("Gjøre paa nytt eller tast Q\n");
-        }
+                break;
+            }
+            break;
+
+        } valg = lesChar("les paa nytt elle Q");
     }
-    else
-    {
-        cout << "Det var ikke riktig valg prøv paa nytt!";
-
-
-
     }
-}
+
 
 void Soner::nySone(int sNr)
 {
@@ -118,7 +116,7 @@ void Soner::skrivTilFil() {
     cout << "\n\tSkriver ut til filen 'SONER.DTA'...\n\n";
     if (utFil) {
         for (const auto & val : gSoner) {
-            utFil << val.first;
+            //utFil << val.first;
             (val.second)->skrivTilFil(utFil); // Alle skriver seg selv til fil.
         }
         utFil.close();
@@ -133,13 +131,14 @@ void Soner::skrivTilFil() {
  * 
  */ 
 void Soner::lesFraFil() {
-    ifstream innFil("SONER.DTA"); int sNr;
+    ifstream innFil("SONER.DTA"); 
+    int sNr;
     cout << "\n\tLeser fra filen 'SONER.DTA'...\n\n";
     if (innFil) {
         innFil >> sNr;
         innFil.ignore();
         while (!innFil.eof()) {
-            gSoner.insert(pair <int, Sone*>(sNr, new Sone(innFil)));
+            gSoner.insert(pair <int, Sone*>(sNr, new Sone(sNr, innFil)));
         }
         innFil.close();
     }
@@ -148,13 +147,43 @@ void Soner::lesFraFil() {
     
 }
 
+void Soner::hentEnsone()
+{
+  
+        int snNr = lesInt("Hvilken sone skal du se <nr>: ", 1, maxSoner);
+        auto it = gSoner.find(snNr);   // Iterator som leter etter sNr
+        if (it != gSoner.end()) {    // soneNummer ble  funnet
+            it->second->skrivEnSone(snNr);
+        }
+        else                        // sonenummer eksisterer
+            cout << "finnese ikke!";
+}
+
+void Soner::hentEnOPPdrag()//henter
+{
+    int  oppdragsnummer = lesInt("Hvilken oppdragsnummer : ", 1, sisteSNr);
+    for (auto val : gSoner) {
+          val.second->enOppdrag(oppdragsnummer);
+        }
+    
+}
+
+void Soner::soneforKOversikt(int nr, ofstream& ut)
+{
+    gSoner[nr]->enkundeoversikt(ut);
+    cout << "";
+    
+    
+}
+
+
+
+
+
+
 bool Soner::finnes( int sNr) const      //hjelpefunsjon som sikrer at sonenummeret eksisterer!
 {
-   /* auto it1 = gSoner.find(sNr);     //  Prøver å finne vha. medlemsfunksjon.
-    if (it1 != gSoner.end()) {      //  Funn i (<map>):
-        return sNr;               //  Returnerer selve nummeret
-    }  return false;
-    */
+  
     for (const auto& val : gSoner) {
         if ((val.second)->hentSoneNr() == sNr )
             return true;
@@ -178,8 +207,8 @@ void Soner::oppdragMeny()
     cout << "Velkommen til Oppdrag-verden!\n"
         << "Her er mulighetenen du har:\n\t"
         << " N: Oprett ny oppdrag\n"
-        << "1<nr>: Skriv alt om EN gitt oppdrag\n"
-        << "S<nr>: Slett EN gitt oppdrag\n";
+        << "\t1<nr>: Skriv alt om EN gitt oppdrag\n"
+        << "\tS<nr>: Slett EN gitt oppdrag\n";
 }
     
 

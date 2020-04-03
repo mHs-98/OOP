@@ -1,6 +1,7 @@
 #ifndef __ENEBOLIG_H
 #define __ENEBOLIG_H
 
+#include <string>
 #include "Bolig.h"
 
 

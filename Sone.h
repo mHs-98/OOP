@@ -8,6 +8,7 @@
 #include <vector>
 #include "LesData3.h"
 #include "Bolig.h"
+#include <string>
 
 //.extern class Bolig;
 class Sone {
@@ -19,7 +20,7 @@ private:
 public:
     Sone(); //unikSnr telles fra 1
     Sone(int nr);
-    Sone(std::ifstream & in);
+    Sone(int snr, std::ifstream & in);
     void lesBeskrivelse();
     void skrivData();
     void skrivTilFil(std::ofstream & ut) const;
@@ -28,6 +29,12 @@ public:
     int hentSoneNr() {
         return unikSNr;}
     void lagnyOppdrag(int nr);
+    void enOppdrag(int nr);
+    void enkundeoversikt(std::ofstream& ut);
+
+   
+
+
    
 
 };

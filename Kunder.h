@@ -7,6 +7,8 @@
 #include <list>
 #include "Soner.h"
 #include "Sone.h"
+#include <cstring>
+#include <string>
 
 using namespace std;
 class Kunde;
@@ -20,14 +22,17 @@ public:
     void skrivMeny();
     void KundeHandling();
     void nyKunde();         /// legger ny kunde inni lista
-   virtual void lesFraFil();
-   virtual void skrivTilFil();
+    void lesFraFil();
+   void skrivTilFil();
    void skrivHovedData();
    void enKunde(int& nr);
    bool skrevetUtPaa(const int pNr) const;
    void kundeSkrivAlt();
    void endreKunder(int& nr);
    void slettKunde(int& nr);
+   void kundeOversikt();
+
+
 
 
   // int finnes(const int nr)const;

@@ -6,6 +6,7 @@
 #include "Enebolig.h"
 #include "LesData3.h"
 #include <iostream>
+#include <string>
 
 Enebolig::Enebolig(const int nr) : Bolig(nr) {
     areal = 0; festetomt = false;

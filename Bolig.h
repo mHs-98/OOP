@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include "enum.h"
-
+#include <string>
 
 
 class Bolig {
@@ -31,6 +31,10 @@ public:
 	void	skrivData() const;
 	void	skrivTilFil(std::ofstream & ut);
 	void nyOppdrag();
+	void lesFraFil();
+
+
+
 };
 
 #endif

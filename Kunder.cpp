@@ -1,3 +1,5 @@
+ï»¿#define _CRT_SECURE_NO_WARNINGS
+
 #include<iostream>
 #include<fstream>
 #include "LesData3.h"
@@ -7,15 +9,18 @@
 #include "Soner.h"
 #include <list>
 #include <iomanip>
+#include <cstring>
+#include <algorithm>
+#include <string>
 
 using namespace std;
 
-extern Soner gsonene;
+extern Soner gSonene;
 
 //class Kunde;
 Kunder::Kunder() {
  kundeListe = list<Kunde*>();
-    sisteNr = 0;        ///første kunde må ha nr 1
+    sisteNr = 0;        ///fÃ¸rste kunde mÃ¥ ha nr 1
 }
 
 void Kunder::skrivMeny(){
@@ -33,6 +38,7 @@ void Kunder::skrivMeny(){
  void Kunder::KundeHandling() {
     skrivMeny();
     char valg;
+   
     int nr = 0;
     valg = lesChar("\nTa en Valg");
     while(valg != 'Q'){
@@ -42,7 +48,7 @@ void Kunder::skrivMeny(){
             case 'A': kundeSkrivAlt();   break;   
             case 'E': endreKunder(nr);      break;
             case 'S': slettKunde(nr);      break;
-        //    case 'O': kundeOversikt();  break;
+           case 'O': kundeOversikt();  break;
             default: skrivMeny();
 
         } valg = lesChar("\nvalg paa nytt eller 'Q'uit?");
@@ -57,18 +63,21 @@ void Kunder::nyKunde() {
 }
 
 void Kunder::lesFraFil() {      //leser kundens data fra fil
-    ifstream innfil("KUNDER.DTA");
-    innfil >> sisteNr; innfil.ignore();
-    Kunde* kunden;      ///hjepe-variabel
+    ifstream innfil("KUNDER.DTA"); 
+    Kunde* kunden;      ///hjepe-variabler
     int kundeNr;
-
+    //cout << "finer ikke kundenummer";
     if(innfil){ ///filen eksister
-              ///leser inn første kunden
-    innfil>> kundeNr; innfil.ignore();
-    while(!innfil.eof()){   ///mer å lese
+              ///leser inn fÃ¸rste kunden
+        innfil >> sisteNr;
+        innfil >> kundeNr;
+    while(!innfil.eof()){   ///mer Ã¥ lese
+
             kunden = new Kunde(innfil, kundeNr);
             kundeListe.push_back(kunden); ///legg kunden inni lista
+            innfil >> kundeNr;          //leser neste kunde
     }
+   // cout << "gaar ut av while-lokka!";
 
     }
 
@@ -77,7 +86,7 @@ void Kunder::lesFraFil() {      //leser kundens data fra fil
  void Kunder::skrivTilFil() {
     ofstream ut("KUNDER.DTA");
     ut << sisteNr << '\n';
-    ut << kundeListe.size() << '\n';
+    //ut << kundeListe.size() << '\n';
     for (const auto& val : kundeListe)
     {
         val->skrivTilFil(ut);
@@ -86,7 +95,7 @@ void Kunder::lesFraFil() {      //leser kundens data fra fil
 
  void Kunder::skrivHovedData()
  {
-     cout << " \nSå mange kunder finnes\n\t" << kundeListe.size();
+     cout << " \nSÃ¥ mange kunder finnes\n\t" << kundeListe.size();
      cout << "SistNr:\t\n" << sisteNr;
  }
 
@@ -108,7 +117,7 @@ void Kunder::lesFraFil() {      //leser kundens data fra fil
          else {
              cout << "Det nummeret eksisterer ikke! "
                  << "tast et nummer mellom" << kundeListe.max_size() << " og 1";
-         }cin >> nr;
+         }cin >> nr; cin.ignore();
      }
  }
 
@@ -126,7 +135,7 @@ void Kunder::lesFraFil() {      //leser kundens data fra fil
      cout << "\n\tAlle " << kundeListe.size() << " hittil registrerte kundenavn:\n";
      int i = 0;
      for (const auto& val : kundeListe) {       ///for hver kund i lista
-         val->skrivData();                      /// be skrive sin egen data ut på skjerm
+         val->skrivData();                      /// be skrive sin egen data ut pÃ¥ skjerm
          if (++i % 10 == 0){            ///stanst for hver 10.kunde
                  cout << "\t\t\t\t\t\tSkriv ENTER/CR .....\n";  cin.ignore();
              }
@@ -137,40 +146,117 @@ void Kunder::lesFraFil() {      //leser kundens data fra fil
 
  void Kunder::endreKunder(int& nr)
  {
-     for (const auto& val : kundeListe)     ///hent ut en kun
+     nr = lesInt("Hvilken kunde skal endres", 1, sisteNr);
+    
      {
-         cout << "Hvilken kundenummer vil du endre?:\n\t";
-         cin >> nr;
+         for (auto val : kundeListe) {
+             if (val->hentID() == nr) {
 
-         if (skrevetUtPaa(nr)) {   //  kunden finnes
-             cout << " \n\tHer ser du naavaerende data om kunden:\n";
+                 cout << " \n\tHer ser du naavaerende data om kunden:\n";
+                 val->skrivData();  //
+             }
+             else
+             {
+                 cout << "Ugyldig kundenummer!";
+             }
+             char valg;
+             cout << "\t\nDu har to valg\n:"
+                 << "'L'egge til nytt sone eller 'S'lette en sone fra vedkommende!\n";
+             valg = lesChar("\nL eller S?: \n");
+             while (valg != 'Q')
+             {
+                 switch (valg)
+                 {
+                 case 'L': val->soneEndre();    break;
+                 case'S': val->slettSone();     break; 
+                 default: cout << "Ugyldig valg";
+                     break;
+                 }
+                 valg = lesChar("\nValg paa nytt eller 'Q'uit\n");
+             } 
 
-             val->skrivData();
-             
+
 
          }
-         else {
-             cout << "Det nummeret eksisterer ikke! "
-                 << "tast et nummer mellom" << kundeListe.max_size() << " og 1";
-         }
+
+
      }
  }
+ 
  void Kunder::slettKunde(int& nr)
  {
-     Kunde* tmpKunde = nullptr;     ///hjelpevariabel
-     if (!kundeListe.empty()) {
-         nr = lesInt("Kundenummer som skal slettes: ", 1, kundeListe.size());
-         if (skrevetUtPaa(nr)) {   //  Kunde finnes i lista:
-             auto it = find_if(kundeListe.begin(), kundeListe.end(),
-                 [nr](const auto& val) { return(val->hentID() == nr); });
-             if (it != kundeListe.end())       //  Fortsatt funn:
-                 kundeListe.erase(it);          //  Sletter SELVE PEKEREN.
+         //int nr;                           //  Navn til gjenstand(er) Ã¥ slette.
+         int  antall = 0;                      //  Antall gjenstander med navnet.
+
+         nr = lesInt("\tSlette/fjerne ALLE Kunde(er) med nummer:  ", 1, sisteNr);
+
+         //  FINNER ANTALLET MED NAVNET:
+         antall = count_if(kundeListe.begin(), kundeListe.end(),
+             [nr](const auto& val) { return (val->hentID() == nr); });
+
+         if (antall > 0) {                        //  Gjenstand(er) ble funnet:
+             cout << "\n\tÃ˜nsker du VIRKELIG Ã¥ slette/fjerne "
+                 << ((antall > 1) ? "ALLE disse" : "denne");
+             if (lesChar(" (j/N)") == 'J') {      //  VIL slette alle:
+                                                  //  AKTUELLE SLETTES:
+                 kundeListe.remove_if([nr](const auto& val)
+                     { return (val->hentID() == nr); });
+                 cout << "\n\t" << antall << " kunde er slettet!"
+                     << "\n\tDet er nÃ¥ " << kundeListe.size()
+                     << " kunder tilbake i listen.\n";
+             }
+             else
+                 cout << "\n\tOK - ingen gjenstand har blitt slettet.\n";
          }
-         cout << "\tSlettet er altså:\n";
-       tmpKunde->skrivData();           //  Skriver den som slettes.
-         delete tmpKunde;               ///så sletter kunden
      }
+     
+
+ void Kunder::kundeOversikt()
+ {
+     cout << "inni kunder::kundeoversikt()";
+    //char* enkundesfil = new char [20];  //filnavnet bÃ¸r jo ikke vÃ¦re lengre enn 20 tegn uansett vel??
+     //string enkundesfil;
+    //Kunde* tmpKunde = nullptr;
+    //string nr;
+    int nr;
+    cin >> nr;
+   // strcat(enkundesfil, "K");            //limer sammen 'K'
+   // strcat(enkundesfil, to_string(nr).c_str());   //med kundenummeret?!
+
+   /* char* filNavn = "K";
+    strcat(filNavn, to_string(nr).c_str());*/
+  // string filNavn = string("K") + to_string(nr) + string(".DTA");
+    string filNavn = string("K") + to_string(nr) + string(".DTA");
+
+    ofstream ut(filNavn);
+
+    for (auto val : kundeListe) {
+        if (val->hentID() == nr) {
+            val->hentenKundoversikt(ut);
+        }
+    }
+    /*
+     auto it2 = find_if(kundeListe.begin(), kundeListe.end(),
+         [nr](const auto& val) { return val->hentID() == (nr); });
+     if (it2 != kundeListe.end()) {       //  Funn i lista
+         strcat(enkundesfil, "K");            //limer sammen 'K'
+         strcat(enkundesfil, to_string(nr).c_str());   //med kundenummeret?!
+          
+         ofstream ut(enkundesfil);
+        kundeListe[*it2]->hentenKundoversikt(ut);   //kaller paa funskjonen i Kunde
+         cout << *it2;
+         
+     }*/
+
+
+     
  }
+
+ 
+
+ 
+
+ 
  
 
 
