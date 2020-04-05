@@ -17,29 +17,7 @@ private:
     std::list<Kunde*> kundeListe;           //  list med pekere til 'Kunde'
     int sisteNr;
 public:
-
-    Kunder();           ///default connstructor
-    Kunder(ifstream &inn);  ///leser inn egne data vha constructor
-    void skrivMeny();
-    void KundeHandling();
-    void nyKunde();         /// legger ny kunde inni lista
-    void lesFraFil();
-   void skrivTilFil();
-   void skrivHovedData();
-   void enKunde(int& nr);
-   bool skrevetUtPaa(const int pNr) const;
-   void kundeSkrivAlt();
-   void endreKunder(int& nr);
-   void slettKunde(int& nr);
-   void kundeOversikt();
-
-
-
-
   // int finnes(const int nr)const;
-  
-
-
     Kunder();                               //default connstructor
     Kunder(std::ifstream &inn);             //leser inn egne data vha constructor
     void    skrivMeny();
@@ -53,6 +31,7 @@ public:
     void    kundeSkrivAlt();
     void    endreKunder(int& nr);
     void    slettKunde(int& nr);
+    void  kundeOversikt();
     
     //int   finnes(const int nr)const;
  };

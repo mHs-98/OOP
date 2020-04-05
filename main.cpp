@@ -22,13 +22,8 @@
 using namespace std;
 
 
-Soner gSonene;
-Kunder gkundene;
-
-Kunder gkundene;                        ///<  Datastrukturen med ALLE Kunder.
-Soner gsonene;                          ///<  Datastrukturen med ALLE Soner.
-
-
+Soner gSonene;              ///<  Datastrukturen med ALLE Kunder.
+Kunder gkundene;                ///<  Datastrukturen med ALLE Soner.
 
 
 /**
@@ -38,7 +33,7 @@ int main(){
     char valg;
 
 
-char valg;
+
     gSonene.lesFraFil();
 
 
@@ -63,17 +58,5 @@ char valg;
 return 0;
 }
 
-     while(valg != 'Q'){
-         switch(valg){
-             case 'K':               gkundene.KundeHandling();   break;
-             case 'S': case 'O':     gsonene.soneHandling();     break;
-            default: skrivMeny();
-         }
-         valg = lesChar("\nValg en handling: ");
-     }
      
-     gkundene.skrivTilFil();
-     
-     return 0;
-}
 

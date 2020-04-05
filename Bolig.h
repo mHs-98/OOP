@@ -33,8 +33,6 @@ public:
 	void nyOppdrag();
 	void lesFraFil();
 
-
-
 };
 
 #endif
