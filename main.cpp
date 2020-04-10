@@ -27,7 +27,7 @@ Kunder gkundene;                ///<  Datastrukturen med ALLE Soner.
 
 
 /**
- *  Hovedprogrammet:
+ *  Hovedprogrammet
  */
 int main(){
     char valg;
@@ -41,7 +41,7 @@ int main(){
     
     skrivMeny();
 
-        valg = lesChar("\nValg en handling: ");
+        valg = lesChar("\nVelg en handling: ");
 
 
     while(valg != 'Q'){
@@ -51,7 +51,7 @@ int main(){
                 gSonene.soneHandling();    break;
             default: skrivMeny();
 
-        }valg = lesChar("Vagl på nytt?");
+        }valg = lesChar("Velg på nytt?");
     }
     gkundene.skrivTilFil();
     gSonene.skrivTilFil();
@@ -59,4 +59,3 @@ return 0;
 }
 
      
-

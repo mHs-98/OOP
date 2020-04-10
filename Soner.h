@@ -31,7 +31,7 @@ public:
     void oppdragMeny();
     void skrivTilFil();
     void lesFraFil();
-    void hentEnsone();
+    void hentEnSone();
     void hentEnOPPdrag();
     void soneforKOversikt(int nr, std::ofstream& ut);
     //void kundOversikt(int nr);

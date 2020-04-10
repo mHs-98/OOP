@@ -1,4 +1,9 @@
-﻿#define _CRT_SECURE_NO_WARNINGS
+﻿/**
+ *   @file      Bolig.cpp
+ *   @author    Gruppe 12, NTNU
+ */
+
+#define _CRT_SECURE_NO_WARNINGS
 
 #include<iostream>
 #include<fstream>
@@ -17,12 +22,14 @@ using namespace std;
 
 extern Soner gSonene;
 
-//class Kunde;
 Kunder::Kunder() {
  kundeListe = list<Kunde*>();
     sisteNr = 0;        ///første kunde må ha nr 1
 }
 
+/**
+ * Skriver oppdrag menyvalg/muligheter på skjermen.
+ */
 void Kunder::skrivMeny(){
 
    cout  << "\tK N - NY Kunde\n"
@@ -35,6 +42,11 @@ void Kunder::skrivMeny(){
    
 }
 
+/**
+ * Handler oppdrag menyvalg/muligheter som er på skjermen.
+ * 
+ * @file 'Kunde.cpp'
+ */
  void Kunder::KundeHandling() {
     skrivMeny();
     char valg;
@@ -54,6 +66,12 @@ void Kunder::skrivMeny(){
         } valg = lesChar("\nvalg paa nytt eller 'Q'uit?");
     }
  }
+
+/**
+ * oppretter ny kunde og lagrer den inn i datastrukturen
+ * 
+ * @see     Kunde::lesData()
+ */
 void Kunder::nyKunde() {
    // int nr;
     Kunde* kunden = new Kunde(++sisteNr);        ///kunde
@@ -62,7 +80,12 @@ void Kunder::nyKunde() {
     kundeListe.push_back(kunden);       //nyeste kunden legges bakerst i lista 
 }
 
-void Kunder::lesFraFil() {      //leser kundens data fra fil
+/**
+ * leser kundens data fra filen
+ * 
+ * @file    'KUNDER.DTA'
+ */
+void Kunder::lesFraFil() {      
     ifstream innfil("KUNDER.DTA"); 
     Kunde* kunden;      ///hjepe-variabler
     int kundeNr;
@@ -83,6 +106,11 @@ void Kunder::lesFraFil() {      //leser kundens data fra fil
 
 }
 
+/**
+ * Skriver kundens data til filen
+ * 
+ * @file 'KUNDER.DTA'
+ */
  void Kunder::skrivTilFil() {
     ofstream ut("KUNDER.DTA");
     ut << sisteNr << '\n';
@@ -99,7 +127,13 @@ void Kunder::lesFraFil() {      //leser kundens data fra fil
      cout << "SistNr:\t\n" << sisteNr;
  }
 
-
+/**
+ * Skriv data om en gitt kunde
+ * 
+ * @param   nr - Kunde sin Nr
+ * @see     Kunder::skrivHovedData()
+ * @see     Kunde::skrivData()
+ */
  void Kunder::enKunde(int& nr)
  {
      
@@ -121,6 +155,12 @@ void Kunder::lesFraFil() {      //leser kundens data fra fil
      }
  }
 
+/**
+ * Hjelpefunksjon som sjekker om kunde Nr er lik parameteren
+ * 
+ * @param   pNr - hjelpe variable som bør være kunde Nr
+ * @see     Kunde::hentID()
+ */
  bool Kunder::skrevetUtPaa(const int pNr) const
  {
      for (const auto& val : kundeListe) {
@@ -130,6 +170,11 @@ void Kunder::lesFraFil() {      //leser kundens data fra fil
 
  }
 
+/**
+ * Skriver alt om alle kunder i datastrukturen
+ * 
+ * @see Kunde::skrivData()
+ */
  void Kunder::kundeSkrivAlt()
  {
      cout << "\n\tAlle " << kundeListe.size() << " hittil registrerte kundenavn:\n";
@@ -143,7 +188,12 @@ void Kunder::lesFraFil() {      //leser kundens data fra fil
      }
 
  
-
+/**
+ * Endre kunde data
+ * 
+ * @param   nr - Kunde sin Nr
+ * @file    'Kunde.cpp'
+ */
  void Kunder::endreKunder(int& nr)
  {
      nr = lesInt("Hvilken kunde skal endres", 1, sisteNr);
@@ -166,12 +216,12 @@ void Kunder::lesFraFil() {      //leser kundens data fra fil
              while (valg != 'Q')
              {
                  switch (valg)
-                 {
-                 case 'L': val->soneEndre();    break;
-                 case'S': val->slettSone();     break; 
-                 default: cout << "Ugyldig valg";
-                     break;
-                 }
+                {
+
+                    case 'L': val->soneEndre();         break;
+                    case 'S': val->slettSone();         break; 
+                    default: cout << "Ugyldig valg";    break;
+                }
                  valg = lesChar("\nValg paa nytt eller 'Q'uit\n");
              } 
 
@@ -183,6 +233,12 @@ void Kunder::lesFraFil() {      //leser kundens data fra fil
      }
  }
  
+ /**
+ * Sletter en spesifikk kunde sin data
+ * 
+ * @param   nr - Kunde Nr
+ * @see     kunde::hentID()
+ */
  void Kunder::slettKunde(int& nr)
  {
          //int nr;                           //  Navn til gjenstand(er) å slette.
@@ -210,7 +266,11 @@ void Kunder::lesFraFil() {      //leser kundens data fra fil
          }
      }
      
-
+/**
+ * Skriver alle data om alle boliger i kunder interesser ut til filen
+ * 
+ * @file    'KUNDER.DTA'
+ */
  void Kunder::kundeOversikt()
  {
      cout << "inni kunder::kundeoversikt()";

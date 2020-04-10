@@ -11,7 +11,7 @@ class Bolig {
 private:
 	int oppdragsNr,					// et unikt oppdrags-/bolignummer
 		innlagtDato,				// Inlagt dato i systemet
-		byggeår,
+		byggeaar,
 		bruttoAreal,
 		antallSoverom,
 		angittPris;

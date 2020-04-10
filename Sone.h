@@ -24,7 +24,7 @@ public:
     void lesBeskrivelse();
     void skrivData();
     void skrivTilFil(std::ofstream & ut) const;
-    void skrivEnSone(const int sNr);
+    void skrivEnSone();
     int finn(const std::string nvn);
     int hentSoneNr() {
         return unikSNr;}

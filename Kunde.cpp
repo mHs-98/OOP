@@ -1,3 +1,8 @@
+/**
+ *   @file      Bolig.cpp
+ *   @author    Gruppe 12, NTNU
+ */
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -13,12 +18,22 @@
 extern Soner gSonene;
 using namespace std;
 
+/**
+ * initialiserer kunde datastrukturen
+ */
 Kunde::Kunde() { cout << "Burde aldri komme opp!";}
 Kunde::Kunde(int nr) {
 
     kNr = nr;
     tlf = 0;
 }
+
+/**
+ * Leser kunde sin data fra filen
+ * 
+ * @param   inn - ifstream referanse variable
+ * @file    'KUNDER.DTA'
+ */
 Kunde::Kunde(ifstream &inn, int nr) {
     cout << "inni kunde-constructor";
     kNr = nr; inn.ignore();
@@ -32,6 +47,12 @@ Kunde::Kunde(ifstream &inn, int nr) {
 
 }   
 
+/**
+ * Skriver Kunde sin data ut til filen
+ * 
+ * @param   ut - ofstream referanse variable
+ * @file    'KUNDER.DTA'
+ */
 void Kunde::skrivTilFil(ofstream &utfil){
     
     utfil << kNr        << endl; 
@@ -55,7 +76,9 @@ void Kunde::skrivTilFil(ofstream &utfil){
 }*/
 
 
-
+/**
+ * Leser inn kunde sin data fra brukeren
+ */
 void Kunde::lesData() {
     int soneNr;
     cout << " \n\tNavn: ";                 getline(cin, navn);
@@ -75,7 +98,9 @@ void Kunde::lesData() {
     } while (!gSonene.finnes(soneNr));
 }
 
- 
+/**
+ * Skriver Kunde sin innhold
+ */
 void Kunde::skrivData() {
    // Kunder tmpkunder;       ///gjør akkurat hva den sier
    // tmpkunder.skrivHovedData();
@@ -87,6 +112,9 @@ void Kunde::skrivData() {
 
 }
 
+/**
+ * hjelpefunskjon som Henter og return kunde Nr
+ */
 int Kunde::hentID() {
     return kNr;
 }
@@ -115,6 +143,12 @@ string Kunde::hentNavn() { return navn; }
     }
 }*/
 
+/**
+ * Hjelpe funksjon som får tak i sone Nr en kunde er interessert i
+ * 
+ * @param   ut - ofstream referanse variable
+ * @file    'KUNDER.DTA'
+ */
 void Kunde::hentenKundoversikt(ofstream& ut)
 {
     cout << "\ninni kunde::hentekundeoverskit()\n";
@@ -131,6 +165,9 @@ void Kunde::hentenKundoversikt(ofstream& ut)
     }
 }
 
+/**
+ * Endre Sone sin data
+ */
 void Kunde::soneEndre()
 {
     int soneNr;
@@ -146,6 +183,12 @@ void Kunde::soneEndre()
      } while (!gSonene.finnes(soneNr));
      cout << "\nut av while\n";
 }
+
+/**
+ * Slett Sone sin data
+ * 
+ * @see     Soner::finnes()
+ */
 void Kunde::slettSone()
 {
 

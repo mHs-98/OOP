@@ -1,3 +1,8 @@
+/**
+ *   @file      Bolig.cpp
+ *   @author    Gruppe 12, NTNU
+ */
+
 #include <iostream>
 #include <fstream>
 #include "LesData3.h"
@@ -9,14 +14,12 @@
 #include "Enebolig.h"
 #include <string>
 
-extern Soner gsonene;
-//extern Bolig boliger;
-
 using namespace std;
 
 /**
  * Leser inn klassens innhold fra filen
- * @param in - Filobjektet egne data leses inn fra
+ * @param   in - Filobjektet egne data leses inn fra
+ * @param   snr - Sone Nr
  */ 
 Sone::Sone(int snr,  ifstream& in) {
     unikSNr = snr;
@@ -27,8 +30,9 @@ Sone::Sone(int snr,  ifstream& in) {
 }
 
 /**
+ * Skriver ut klassens innhold til filen
  * 
- * 
+ * @param   in - Filobjektet egne data leses inn fra
  */ 
 void Sone::skrivTilFil(ofstream & ut) const {
     ut << unikSNr << "\t" << soneBeskrivelse << endl;
@@ -37,16 +41,28 @@ void Sone::skrivTilFil(ofstream & ut) const {
     }
 }
 
+/**
+ * Leser Sonens beskrivelse
+ */ 
 void Sone::lesBeskrivelse() {
     cout << "\n\nSkriv en kort beskrivelse om sonen: ";
     getline(cin, soneBeskrivelse); //Leser inn sonens beskrivelse
 
 }
+
+/**
+ * Intialerer Eksempel Sone
+ * 
+ * @param   nr - Sone Nr
+ */ 
 Sone::Sone(int nr) {
     unikSNr = nr;
-     soneBeskrivelse = "Eksempel Beskrivelse";
+    soneBeskrivelse = "Eksempel Beskrivelse";
 };
 
+/**
+ * Skriver Sone sin data
+ */ 
 void Sone::skrivData() {
     cout << "\t";
     cout << "\n\tSone Nr: " << unikSNr
@@ -54,43 +70,42 @@ void Sone::skrivData() {
 
 }
 
-/// @todo: Lage Bolig::skrevetPaa() i Bolig.h
-void Sone::skrivEnSone(int sNr) { // g gjennom boliger og skrive ut en bolig
-   
-    for (auto val : gBoliger) {
-        val->skrivData();
-    }
-}
-
-
-
-
-
-   /* if (!gBoliger.empty()) {
-        sNr = lesInt("Sone nr: ", 1, maxSoner);
-        for (const auto val : gBoliger) {
-            if (val->hentID->skrevetUtPaa(sNr)) {
-                val->hentID->skrivEnOppdrag(sNr);
-                if ( (sNr % 5) != 0) {
-                cout << "\n\n\tTrykk Paa ENTER for  fortsette";
+/**
+ *  Går gjennom boliger i en Sone og skriver alt om dem
+ * 
+ * @see     Soner::hentEnSone()
+ */
+void Sone::skrivEnSone() {
+    cout << "\nSone Nr: " << unikSNr;
+   if (!gBoliger.empty()) {
+        for (int i = 0; i < gBoliger.size(); i++) { // Går gjennom boligen
+            gBoliger[i]->skrivData();   // Skriver bolig sin data
+            cout << "\n\n";
+            if ( ((i+1) % 5) == 0) {   // Stans utskrift hver 5 boliger
+                cout << "\n\n\tTrykk Paa ENTER for aa fortsette";
                 cin.get();
-            }
             }
         }
 
     }
     else
     {
-        cout << "\n\tIngen data av Soner fantes!\n\n";
+        cout << "\n\tFant Ingen data om Boliger i denne Sonen!\n\n";
     }
     
-}*/
+}
 
+/**
+ * Lager ny oppdrag og legger den inn i datastrukturen
+ * 
+ * @param   nr - Sone Nr
+ * @see     Bolig::lesData()
+ */ 
 void Sone::lagnyOppdrag(int nr)
 {
     Bolig* nyBolig = nullptr;
-   // nyBolig->nyOppdrag();       //kaller paa funskjone i bolig klassen
-                                  //veldig knotete aa gjøre det paa men, maa man saa man!
+   // nyBolig->nyOppdrag();       // Kaller paa funskjone i bolig klassen
+                                  // Veldig knotete aa gjøre det paa men, maa man saa man!
 
     char boligType;
 
@@ -104,18 +119,29 @@ void Sone::lagnyOppdrag(int nr)
     }
 
     nyBolig->lesData();
-    gBoliger.push_back(nyBolig);//ny oppdraget legges bakerst i vektoren
+    gBoliger.push_back(nyBolig);// Ny oppdraget legges bakerst i vektoren
 }
 
+/**
+ * Går gjennom alle oppdrag og skriver sin data
+ * 
+ * @param   nr - Sone Nr
+ */ 
 void Sone::enOppdrag(int nr)
 {
-    for (auto val : gBoliger) { //lop alle oppdragr
-        if(nr ==val->hentID())        // hvis riktgi opdranummer
-            val->skrivData();   //skriv sin egen data?
+    for (auto val : gBoliger) { // Går gjennom alle oppdrag
+        if(nr ==val->hentID())        // Riktig opdragsdnummer?
+            val->skrivData();   // Skriv sin egen data?
     }
 
 }
 
+/**
+ * Skriver Sonens boliger innhold
+ * 
+ * @param   ut - ofstream referanse variable
+ * @see     Bolig::skrivTilFil()
+ */ 
 void Sone::enkundeoversikt(ofstream& ut)
 {
     
