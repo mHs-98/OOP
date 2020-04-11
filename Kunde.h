@@ -1,3 +1,11 @@
+/**
+*
+*@author: Abdisalan M. Husein, Mahamed Hassan Said, Elias Touil, NTNU Gjøvik
+*@file: Kunde.h.
+*
+*/
+
+
 #pragma once
 
 #ifndef __KUNDE_H                  //  Ensures that this file will be
@@ -17,14 +25,14 @@ using namespace std;
 class Kunde {
 
 private:
-    vector <int> vKunde;    //sonenummr kinden er interseeert i
+    vector <int> vKunde;    //sonenummr kunden er interseeert i
      int kNr,           ///unike kundenummer og skal sorteres på
          tlf;       ///
     string navn,        ///kunde navn
             gate,       ///gateaddresse(gate + nr)
             poststed,   /// (postnr + sted)
             mail;           /// mail til vedkommende
-    boligtype type;         /// 'Leilighet' eller 'Enebolig' -kundens interesse
+    Boligtype boligType;         /// 'Leilighet' eller 'Enebolig' -kundens interesse
 
 
 public:
@@ -34,7 +42,7 @@ public:
     //~Kunde();               ///destructor
    ///andre funskjoner
     void skrivTilFil(ofstream& utfil);
-    void lesFraFil();
+   // void lesFraFil();
     void lesData();
     void skrivData();
     int hentID();

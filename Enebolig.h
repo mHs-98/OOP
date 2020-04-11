@@ -1,3 +1,11 @@
+/**
+*Enebolig.h, deklerasjonsklassen
+*@author: Abdisalan M. Husein, Mahamed Hassan Said, Elias Touil, NTNU Gjøvik
+*@file: Enebolig.h.
+*
+*/
+
+
 #ifndef __ENEBOLIG_H
 #define __ENEBOLIG_H
 

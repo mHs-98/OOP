@@ -1,3 +1,11 @@
+/**
+*Soner.h, deklerasjonsklassen
+*@author: Abdisalan M. Husein, Mahamed Hassan Said, Elias Touil, NTNU Gjøvik
+*@file: Soner.h.
+*
+*/
+
+
 #pragma once
 
 #ifndef __SONER_H                  //  Ensures that this file will be
@@ -21,20 +29,22 @@ public:
     Soner();
     //~Soner();
     void skrivAlleSoner();
-    void nySone(const int sNr);
-    void endreSone(const int sNr);
-    void slettSone(const int sNr);
-    void soneHandling();
+    void nySone( int sNr);
+    void endreSone( int sNr);
+    void slettSone( int sNr);
+    void soneHandling(char valg);
     void soneMeny();
     bool finnes( int sNr) const;
     void nyOppdrag(int& snNr);
     void oppdragMeny();
     void skrivTilFil();
     void lesFraFil();
-    void hentEnSone();
+    void hentEnsone();
     void hentEnOPPdrag();
     void soneforKOversikt(int nr, std::ofstream& ut);
     //void kundOversikt(int nr);
+    void hjelpKAiSOner();
+
 
 
 

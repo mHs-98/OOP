@@ -1,7 +1,3 @@
-/**
- *   @file      Bolig.cpp
- *   @author    Gruppe 12, NTNU
- */
 
 #include <iostream>
 #include <string>
@@ -14,45 +10,40 @@
 #include "Soner.h"
 #include "Sone.h"
 #include <string>
+#include "globaleFunskjoner.h"
 
 extern Soner gSonene;
 using namespace std;
 
-/**
- * initialiserer kunde datastrukturen
- */
 Kunde::Kunde() { cout << "Burde aldri komme opp!";}
 Kunde::Kunde(int nr) {
 
     kNr = nr;
     tlf = 0;
 }
-
-/**
- * Leser kunde sin data fra filen
- * 
- * @param   inn - ifstream referanse variable
- * @file    'KUNDER.DTA'
- */
 Kunde::Kunde(ifstream &inn, int nr) {
-    cout << "inni kunde-constructor";
+    char tegn;
     kNr = nr; inn.ignore();
     getline(inn, navn);
     inn >> tlf; inn.ignore();
     getline(inn, mail);
     getline(inn, gate);
     getline(inn, poststed);
-    cout << "nederst i constructr";
-   // type = lesType();
+   /* for (auto val : vKunde) {
+        val->
+    }
+   // type = lesType();*/
+    inn >> tegn;
+    switch (tegn)
+    {
+    case 'B': boligType = bolig;        break;
+    case 'E': boligType = enebolig;      break;
+    default: boligType = ikkeSatt;      break;
+        break;
+    }
 
 }   
 
-/**
- * Skriver Kunde sin data ut til filen
- * 
- * @param   ut - ofstream referanse variable
- * @file    'KUNDER.DTA'
- */
 void Kunde::skrivTilFil(ofstream &utfil){
     
     utfil << kNr        << endl; 
@@ -61,6 +52,12 @@ void Kunde::skrivTilFil(ofstream &utfil){
     utfil << mail       << endl;
     utfil << gate       << endl;
     utfil << poststed    << endl;
+   
+    switch (boligType) {
+    case bolig: utfil << 'B' <<'\n';       break;
+    case enebolig: utfil << 'E' << '\n';         break;
+    default: utfil << 'X' << '\n';          break;
+    }
 
 }
 
@@ -76,11 +73,10 @@ void Kunde::skrivTilFil(ofstream &utfil){
 }*/
 
 
-/**
- * Leser inn kunde sin data fra brukeren
- */
+
 void Kunde::lesData() {
     int soneNr;
+    char tegn;
     cout << " \n\tNavn: ";                 getline(cin, navn);
     cout << "\n\tAddresse + nr: ";         getline(cin, gate);
     cout << " \n\tPostaddresse + nr: ";    getline(cin, poststed);
@@ -89,18 +85,28 @@ void Kunde::lesData() {
 
     do {
         soneNr = lesInt("Hvilken sone er du interessert initielt: ", 1, maxSoner);
-        if (gSonene.finnes(soneNr)) {
-            vKunde.push_back(soneNr); ///ikke helt korrekt?? men egen varibel og bruk hjelpefunsjlon som henter soneNr fra Sone klassen??
-            //public hjelpesfundjon i sone som kalles på fra kund si n lesdata().
+        if (gSonene.finnes(soneNr)) {       //sjekker at sonenummer virkelig fins
+            vKunde.push_back(soneNr);       //legger bakerst i vectoren.
         }
         else cout << "Sonenummern finnnes ikke"
             << "tast en sonemmuner mellom 1 og ";
     } while (!gSonene.finnes(soneNr));
+    vKunde.push_back(soneNr);
+    
+    tegn = lesChar("\nSkrvi B eller E\n");
+    switch (tegn)
+    {
+    case 'B': boligType = bolig;        break;
+    case 'E': boligType = enebolig;     break;
+    default: boligType = ikkeSatt;      break;
+        break;
+    }
+
+
+   // type = lesType();
 }
 
-/**
- * Skriver Kunde sin innhold
- */
+ 
 void Kunde::skrivData() {
    // Kunder tmpkunder;       ///gjør akkurat hva den sier
    // tmpkunder.skrivHovedData();
@@ -109,46 +115,23 @@ void Kunde::skrivData() {
         << "\nKundenr:" << kNr << ' '
         << tlf << ' ' << mail << ' '
         << gate << ' ' << poststed << '\n';
+    for (auto val : vKunde) {
+        cout << val;
+    }
+    switch (boligType) {
+    case bolig: cout << "Bolig" << '\n';       break;
+    case enebolig: cout << "Enebolig" << '\n';         break;
+    default: cout << "ikkeSatt" << '\n';          break;
+    }
 
 }
 
-/**
- * hjelpefunskjon som Henter og return kunde Nr
- */
 int Kunde::hentID() {
     return kNr;
 }
 string Kunde::hentNavn() { return navn; }
 
-/*void Kunde::endreKunde()
-{
-    char kommando;
-    //skriver ut informasjon om hvilke kommandoer som kan velges
-    cout << "\nHva har du lyst til aa endre?\n: " << endl
-        << "\nTast L for aa legge til,\nTast S for slette sonenummer," << endl
-        << "\n velg Q for aa slutte" << endl;
-    
-    kommando = lesChar("\nTa en valg\n");
-    while (kommando != 'Q') {
-        switch (kommando) {
-        case 'L':
 
-            cout << " \n\tlegg til enda en sone til";
-                break;
-        case 'S': cout << "Skriv sonen du vil slette";
-            break;
-        default: break;
-        }
-        kommando = lesChar("\n\tValg paa nytt?: \n");
-    }
-}*/
-
-/**
- * Hjelpe funksjon som får tak i sone Nr en kunde er interessert i
- * 
- * @param   ut - ofstream referanse variable
- * @file    'KUNDER.DTA'
- */
 void Kunde::hentenKundoversikt(ofstream& ut)
 {
     cout << "\ninni kunde::hentekundeoverskit()\n";
@@ -159,15 +142,13 @@ void Kunde::hentenKundoversikt(ofstream& ut)
         }
         else
         {
-            cout << "Noe feil!";
+            cout << "\nNoe gikk galt!\n";
         }
         
     }
 }
 
-/**
- * Endre Sone sin data
- */
+
 void Kunde::soneEndre()
 {
     int soneNr;
@@ -183,12 +164,6 @@ void Kunde::soneEndre()
      } while (!gSonene.finnes(soneNr));
      cout << "\nut av while\n";
 }
-
-/**
- * Slett Sone sin data
- * 
- * @see     Soner::finnes()
- */
 void Kunde::slettSone()
 {
 

@@ -1,8 +1,3 @@
-/**
- *   @file     Soner.cpp
- *   @author   Gruppe 12, NTNU
- */
-
 #include <iostream>
 #include <fstream>
 #include "LesData3.h"
@@ -14,14 +9,12 @@
 
 using namespace std;
 
-
 Soner::Soner() {
     sisteSNr = 0;        // Første Sone maa ha nr 1
+   // gSoner.insert(pair <int, Sone*>(sisteSNr, new Sone));
 }
 
-/**
- *  Skriver programmets menyvalg/muligheter på skjermen.
- */
+
 void Soner::soneMeny() {
     cout << "\tS N - Ny Sone\n"
         << "\tS 1 - Skriv ALT om EN Sone\n"
@@ -29,17 +22,15 @@ void Soner::soneMeny() {
         << "\tQ   - Avslutt programmet\n";
 }
 
-/**
- * Handler Sonens menyvalg/muligheter
- */ 
-void Soner::soneHandling() {
 
-    //  if etterfølgt av en switch! 
-    char valg;
+void Soner::soneHandling(char valg) {
+
+    //if etterfølgt av en switch! 
+   // char valg;
     int iNr = 0;
-    cout << "Du befinner deg paa ingen-manns-land\n"
+    cout << "Du befinner du deg paa ingen-manns-land\n"
         << "Tast 'S'one eller 'O'ppdrag";
-    valg = lesChar("\nValg: ");
+   // valg = lesChar("\nValg: ");
     while (valg != 'Q') 
   
     {
@@ -53,7 +44,7 @@ void Soner::soneHandling() {
             case 'N': nySone(iNr);
                 break;
             case 'A': skrivAlleSoner();     break;
-            case '1': hentEnSone();          break;
+            case '1':hentEnsone();          break;
 
             default: soneMeny();
 
@@ -66,6 +57,7 @@ void Soner::soneHandling() {
             switch (valg)
             {
             case 'N': nyOppdrag(iNr);          break;
+           //  case 'S': slettOppdrag();     break;
             case '1': hentEnOPPdrag();
 
             default: oppdragMeny();
@@ -78,17 +70,15 @@ void Soner::soneHandling() {
     }
     }
 
-/**
- *  Lager en ny sone og sender den inn i vectoren
- * @param   sNr - Sone sin Nr
- * @see     Sone::lesBeskrivelse()
- */ 
+
 void Soner::nySone(int sNr)
 {
     Sone* nySone;
 
+    //for (const auto & val : gSoner) {
     sNr = lesInt("SoneNr: ", 1, maxSoner);
     cout << "\nSone Nr " << sNr << endl;
+    //if (val.second->hentSoneNr() == sNr) {
     auto it = gSoner.find(sNr);   // Iterator som leter etter sNr
     if (it == gSoner.end()) {    // soneNummer ble ikke funnet
         nySone = new Sone(sNr);
@@ -100,20 +90,18 @@ void Soner::nySone(int sNr)
     }
 
 
-/**
- * Skriv Soners innhold til 'SONER.DTA'
- * 
- * @see      Sone::skrivData()
- * @file     'SONER.DTA'
- */ 
+
 void Soner::skrivAlleSoner() {
     if (!gSoner.empty()) { /// Sjekker om datastrukturen er tom
         cout << "\n\tSkriver alle Sonene...\n";
         for (const auto& val : gSoner) {
-            cout << "\n\n\t" << val.first;
-            (val.second)->Sone::skrivData();
-            cout << endl; /// Alle skriver seg selv på skjermen.
+            cout << "\n\n\t inni soner::skrivalle()\n" << val.first;
+            val.second->skrivData();
         }
+       /* for (int i = 1; i<=gSoner.size();i++){
+            gSoner[i]->skrivData();
+            cout << endl; /// Alle skriver seg selv på skjermen.
+        }*/
     }
     else
     {
@@ -122,38 +110,49 @@ void Soner::skrivAlleSoner() {
 }
 
 /**
- * Skriv Soners innhold til 'SONER.DTA'
  * 
- * @see     Sone::skrivTilFil()
- * @file    'SONER.DTA'
+ * 
+ * 
  */ 
 void Soner::skrivTilFil() {
     ofstream utFil("SONER.DTA");
     cout << "\n\tSkriver ut til filen 'SONER.DTA'...\n\n";
     if (utFil) {
+        utFil << sisteSNr << '\n';
         for (const auto & val : gSoner) {
+            //utFil << val.first;
             (val.second)->skrivTilFil(utFil); // Alle skriver seg selv til fil.
         }
-        utFil.close();
+       /* for (int i = 1; i < gSoner.size(); i++) {
+            gSoner[i]->skrivTilFil(utFil);
+        }*/
+
+       // utFil.close();
     }
     else
         cout << "\n\tFinner ikke filen 'SONER.DTA'! \n\n";
 }
 
 /**
- * Leser fra 'SONER.DTA' Filen
  * 
- * @file     'SONER.DTA'
+ * 
+ * 
  */ 
 void Soner::lesFraFil() {
     ifstream innFil("SONER.DTA"); 
     int sNr;
+   // int ant;
     cout << "\n\tLeser fra filen 'SONER.DTA'...\n\n";
     if (innFil) {
-        innFil >> sNr;
+        innFil >> sisteSNr;
         innFil.ignore();
+      //  cout << "\nforan while i soner::lesfrafil()\n";
         while (!innFil.eof()) {
+            innFil >> sNr;
             gSoner.insert(pair <int, Sone*>(sNr, new Sone(sNr, innFil)));
+           // innFil >> sisteSNr;
+            //skrivAlleSoner();
+            //cout << "\netter inser\n";
         }
         innFil.close();
     }
@@ -162,91 +161,93 @@ void Soner::lesFraFil() {
     
 }
 
-/**
- *  Skriver alt om en sone
- * 
- * @see     Sone::skrivEnSone()
- */
-void Soner::hentEnSone()
+void Soner::hentEnsone()
 {
+    int snNr = lesInt("Hvilken sone skal du se <nr>: ", 1, maxSoner);
+    auto it = gSoner.find(snNr);   // Iterator som leter etter sNr
+    if (it != gSoner.end()) {    // soneNummer ble  funnet
+        it->second->skrivEnSone(snNr);
+    }
+}
+    /* if (!gBoliger.empty()) {
+        sNr = lesInt("Sone nr: ", 1, maxSoner);
+        for (const auto val : gBoliger) {
+            if (val->hentID->skrevetUtPaa(sNr)) {
+                val->hentID->skrivEnOppdrag(sNr);
+                if ( (sNr % 5) != 0) {
+                cout << "\n\n\tTrykk Paa ENTER for  fortsette";
+                cin.get();
+            }
+            }
+        }
+
+    }
+    else
+    {
+        cout << "\n\tIngen data av Soner fantes!\n\n";
+    }
+
+}
+  
         int snNr = lesInt("Hvilken sone skal du se <nr>: ", 1, maxSoner);
         auto it = gSoner.find(snNr);   // Iterator som leter etter sNr
         if (it != gSoner.end()) {    // soneNummer ble  funnet
-            it->second->skrivEnSone();
+            it->second->skrivEnSone(snNr);
         }
         else                        // sonenummer eksisterer
             cout << "finnese ikke!";
-}
+}*/
 
-/**
- *  Henter Sone sin data i spesifikk oppdrag 
- * 
- * @see     Sone::enOppdrag()
- */
-void Soner::hentEnOPPdrag()
+void Soner::hentEnOPPdrag()//henter
 {
     int  oppdragsnummer = lesInt("Hvilken oppdragsnummer : ", 1, sisteSNr);
     for (auto val : gSoner) {
-          val.second->enOppdrag(oppdragsnummer); //Skriver en oppdrag
+          val.second->enOppdrag(oppdragsnummer);
         }
     
 }
 
-/**
- * Henter Sone Nr og vedkommende Sone sin data
- * 
- * @param   ut - Ofstream variable
- * @param   nr - Sone sin Nr
- * @see     Sone::enkundeoversikt()
- */ 
 void Soner::soneforKOversikt(int nr, ofstream& ut)
 {
-    gSoner[nr]->enkundeoversikt(ut); 
-    cout << "";
+    gSoner[nr]->enkundeoversikt(ut);
+}
+
+void Soner::hjelpKAiSOner()
+{
+    int nr;
+    gSoner[nr]->hjelpeKA();
+
 }
 
 
-/**
- * Bool funksjon som return om sonen finnes eller ikke
- * 
- * @see     Sone::hentSoneNr()
- * @file    'Sone.h'
- */
+
+
 bool Soner::finnes( int sNr) const      //hjelpefunsjon som sikrer at sonenummeret eksisterer!
 {
   
     for (const auto& val : gSoner) {
-        if ((val.second)->hentSoneNr() == sNr ) /// Fant Sone Nr?
+        if ((val.second)->hentSoneNr() == sNr )
             return true;
     }return false;
     
 }
 
-/**
- * Lager ny oppdrag som legges in i vectoren
- * 
- * @param   snNr -  Sone sin Nr
- * @file    'Soner.h'
- */
 void Soner::nyOppdrag(int& snNr)
 {
         snNr = lesInt("Hvilken sone skal oppdraget opprettes i: ", 1, maxSoner);
         auto it = gSoner.find(snNr);   // Iterator som leter etter sNr
-        if (it != gSoner.end()) {    // SoneNummer ble  funnet
+        if (it != gSoner.end()) {    // soneNummer ble  funnet
             it->second->lagnyOppdrag(++sisteSNr);
         }
-        else                        // Sonenummer eksisterer
+        else                        // sonenummer eksisterer
             cout << "Duplikater tillates ikke!";
 }
 
-/**
- * Skriver oppdrag menyvalg/muligheter på skjermen.
- */
 void Soner::oppdragMeny()
 {
     cout << "Velkommen til Oppdrag-verden!\n"
         << "Her er mulighetenen du har:\n\t"
-        << " N: Oprett ny oppdrag\n"
+        << "N: Oprett ny oppdrag\n"
         << "\t1<nr>: Skriv alt om EN gitt oppdrag\n"
         << "\tS<nr>: Slett EN gitt oppdrag\n";
 }

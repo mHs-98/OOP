@@ -1,3 +1,13 @@
+/**
+*Bolig.h, deklerasjonsklassen
+*@author: Abdisalan M. Husein, Mahamed Hassan Said, Elias Touil, NTNU Gjøvik
+*@file: Bolig.h.
+*
+*/
+
+
+
+
 #ifndef __BOLIG_H
 #define __BOLIG_H
 #include <string>
@@ -21,7 +31,7 @@ private:
 		gateAdresse,				// gate + nr
 		postAdresse,				// postnumber + sted
 		boligBeskriv;				//		LATER
-	boligtype boligtype;
+	Boligtype boligType;
 
 public:
 	Bolig();
@@ -31,7 +41,7 @@ public:
 	void	skrivData() const;
 	void	skrivTilFil(std::ofstream & ut);
 	void nyOppdrag();
-	void lesFraFil();
+	void lesFraFil(std::ifstream& inn);
 
 };
 

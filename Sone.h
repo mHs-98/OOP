@@ -1,3 +1,11 @@
+/**
+*Sone.h, deklerasjonsklassen
+*@author: Abdisalan M. Husein, Mahamed Hassan Said, Elias Touil, NTNU Gjøvik
+*@file: Sone.h.
+*
+*/
+
+
 #pragma once
 
 #ifndef __SONE_H                  //  Ensures that this file will be
@@ -23,14 +31,16 @@ public:
     Sone(int snr, std::ifstream & in);
     void lesBeskrivelse();
     void skrivData();
-    void skrivTilFil(std::ofstream & ut) const;
-    void skrivEnSone();
+    void skrivTilFil(std::ofstream & ut) ;
+    void skrivEnSone(const int sNr);
     int finn(const std::string nvn);
     int hentSoneNr() {
         return unikSNr;}
     void lagnyOppdrag(int nr);
     void enOppdrag(int nr);
     void enkundeoversikt(std::ofstream& ut);
+    void hjelpeKA();
+
 
    
 

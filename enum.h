@@ -1,13 +1,20 @@
 /**
-* @file enum.h
-* @author Mahamed H Said
+*
+*@author: Abdisalan M. Husein, Mahamed Hassan Said, Elias Touil, NTNU Gjøvik
+*@file: enum.h.
+*
 */
+
 #pragma once
 #ifndef __enum_H
 #define __enum_H
+#include "LesData3.h"
 
 
-enum boligtype{enebolig, leilighet};
+enum Boligtype{enebolig, bolig, ikkeSatt};
+
+
+
 
 
 #endif // __enum_H

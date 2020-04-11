@@ -1,3 +1,11 @@
+/**
+*Kunder.h, deklerasjonsklassen
+*@author: Abdisalan M. Husein, Mahamed Hassan Said, Elias Touil, NTNU Gjøvik
+*@file: Kunder.h.
+*
+*/
+
+
 #ifndef __KUNDER_H                  //  Ensures that this file will be
 #define __KUNDER_H                  //  included only ONCE in each file.
 
@@ -15,17 +23,17 @@
 class Kunder{
 private:
     std::list<Kunde*> kundeListe;           //  list med pekere til 'Kunde'
-    int sisteNr;
+    int sisteNr;                        //fortløpende nummerering av alle nye kundene
 public:
   // int finnes(const int nr)const;
     Kunder();                               //default connstructor
-    Kunder(std::ifstream &inn);             //leser inn egne data vha constructor
-    void    skrivMeny();
-    void    KundeHandling();
+    Kunder(std::ifstream &inn);             //leser inn egne data fra fil vha constructor
+    void    skrivMeny();                    //meny
+    void    KundeHandling();                //behandler alle mulige handlinger som har 'Kunde' å gjøre noe med    
     void    nyKunde();                      // legger ny kunde inni lista
-    virtual void lesFraFil(); 
-    virtual void skrivTilFil(); 
-    void    skrivHovedData();
+    void   lesFraFil();                     //leser alles
+    void   skrivTilFil(); 
+    void   skrivHovedData();
     void    enKunde(int& nr);
     bool    skrevetUtPaa(const int pNr) const;
     void    kundeSkrivAlt();
