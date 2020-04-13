@@ -1,21 +1,23 @@
 /**
-*Bolig.h, deklerasjonsklassen
-*@author: Abdisalan M. Husein, Mahamed Hassan Said, Elias Touil, NTNU Gjøvik
-*@file: Bolig.h.
+*	Bolig.h, deklerasjonsklassen
+*
+*	@file		BOLIG.H
+*	@author		Abdisalan M. Husein, Mahamed Hassan Said, Elias Touil, NTNU Gjøvik
 *
 */
 
-
-
-
 #ifndef __BOLIG_H
 #define __BOLIG_H
+
 #include <string>
 #include <iostream>
 #include <fstream>
 #include "enum.h"
 #include <string>
 
+/**
+ *  Bolig Klasse
+ */
 
 class Bolig {
 private:
@@ -45,8 +47,7 @@ public:
 	void	lesData();
 	void	skrivData() const;
 	void	skrivTilFil(std::ofstream & ut);
-	//void nyOppdrag();	
-	void lesFraFil(std::ifstream& inn);
+	void	lesFraFil(std::ifstream& inn);
 
 };
 

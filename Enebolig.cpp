@@ -1,6 +1,6 @@
 /**
  *   @file      Enebolig.CPP
- *   @author    Abdisalan M. Hussein
+ *   @author    Gruppe 12
  */
 #include "Bolig.h"
 #include "Enebolig.h"
@@ -13,11 +13,19 @@ Enebolig::Enebolig(const int nr) : Bolig(nr) {
     boligType = enebolig;
 }
 
+/**
+ *  
+ *  @see    Bolig::lesData()
+ */
 void Enebolig::lesData() {
     Bolig::lesData();
     areal = lesInt("Areal:\t", 1, 100);
     festetomt = (lesChar("\tFestetomt?  (j/N)") == 'J');
 }
+/**
+ *
+ *  @see    Bolig::skrivData()...
+ */
 void Enebolig::skrivData() {
     Bolig::skrivData();
     std::cout << "Areal:\t" << areal << '\n';
@@ -27,7 +35,10 @@ void Enebolig::skrivData() {
     }
     else { std::cout << "Tomten er:\t" << " selveiet" << '\n'; }
 }
-
+/**
+ *
+ *  @see    Bolig::skrivTilFil(...)
+ */
 void Enebolig::skrivTilFil(std::ofstream& ut) {
     Bolig::skrivTilFil(ut);
     ut << areal << ' ' << festetomt << '\n';

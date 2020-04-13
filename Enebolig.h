@@ -1,8 +1,8 @@
 /**
-*Enebolig.h, deklerasjonsklassen
-*@author: Abdisalan M. Husein, Mahamed Hassan Said, Elias Touil, NTNU Gjøvik
-*@file: Enebolig.h.
+*	Enebolig.h, deklerasjonsklassen
 *
+*	@file		ENEBOLIG.H
+*	@author		Abdisalan M. Husein, Mahamed Hassan Said, Elias Touil, NTNU Gjøvik
 */
 
 
@@ -12,7 +12,9 @@
 #include <string>
 #include "Bolig.h"
 
-
+/**
+ *	Enebolig
+ */
 class Enebolig : public Bolig {
 private:
 	int areal;				// Tomtens areal i kvadratmeter.
