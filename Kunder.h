@@ -39,7 +39,7 @@ public:
     void    kundeSkrivAlt();
     void    endreKunder(int& nr);
     void    slettKunde(int& nr);
-    void  kundeOversikt();
+    void    kundeOversikt();
     
     //int   finnes(const int nr)const;
  };

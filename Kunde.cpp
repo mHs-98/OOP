@@ -91,7 +91,9 @@ void Kunde::lesData() {
         else cout << "Sonenummern finnnes ikke"
             << "tast en sonemmuner mellom 1 og ";
     } while (!gSonene.finnes(soneNr));
+
     vKunde.push_back(soneNr);
+
     
     tegn = lesChar("\nSkrvi B eller E\n");
     switch (tegn)

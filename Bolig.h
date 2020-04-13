@@ -40,7 +40,7 @@ public:
 	void	lesData();
 	void	skrivData() const;
 	void	skrivTilFil(std::ofstream & ut);
-	void nyOppdrag();
+	//void nyOppdrag();	
 	void lesFraFil(std::ifstream& inn);
 
 };

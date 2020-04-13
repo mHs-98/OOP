@@ -18,7 +18,7 @@ void Enebolig::lesData() {
     festetomt = (lesChar("\tFestetomt?  (j/N)") == 'J');
 }
 void Enebolig::skrivData() {
-   // Bolig::skrivData();
+    Bolig::skrivData();
     std::cout << "Areal:\t" << areal << '\n';
     if (festetomt)
     {
@@ -28,6 +28,7 @@ void Enebolig::skrivData() {
 }
 
 void Enebolig::skrivTilFil(std::ofstream& ut) {
+    Bolig::skrivTilFil(ut);
     ut << areal << ' ' << festetomt << '\n';
 }
 

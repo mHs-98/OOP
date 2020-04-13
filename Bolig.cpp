@@ -29,6 +29,7 @@ Bolig::Bolig() {
     bruttoAreal     = 0;
     antallSoverom   = 0;
     angittPris      = 0;
+   // boligType       = ikkeSatt;
 } 
 
 /**
@@ -67,7 +68,7 @@ void Bolig::skrivData() const {
     cout << "Bygge år:\t " << byggeaar << '\n';
     cout << "Anall Soverom:\t " << antallSoverom << '\n';
     cout << "Bolig Beskrivelse:\t " << boligBeskriv << '\n';
-    cout << "\nnederst bolig::skrivdata()";
+    cout << "\nnederst bolig::skrivdata()\n";
 }
 
 /**
@@ -85,6 +86,7 @@ void Bolig::skrivTilFil(ofstream & ut) {
         switch (boligType) {                        
         case bolig:   ut << 'B' << endl;    break; 
         case enebolig:  ut << 'E' << endl;    break;
+        default: ut << 'X' << endl;         break;
          }
     
 }

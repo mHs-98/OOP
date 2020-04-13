@@ -44,6 +44,8 @@ public:
     void soneforKOversikt(int nr, std::ofstream& ut);
     //void kundOversikt(int nr);
     void hjelpKAiSOner();
+    void oppdragSlett(int nr);
+
 
 
 

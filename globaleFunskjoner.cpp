@@ -20,7 +20,7 @@ do {                         //  Leser ALLTID  'L' eller 'E':
 
         switch (type) {             //  Gjør om til og returnerer aktuell type:
         case 'E':  return enebolig; break;
-        case 'L':  return bolig; break;
+        case 'B':  return bolig; break;
         }
         return ikkeSatt;            //  Skal ALDRI kunne skje (da sikrer(?!!!)
     }                               //    ovenfor at ER BARE 'E', eller 'L').

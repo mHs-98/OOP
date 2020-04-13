@@ -7,6 +7,8 @@
 #include <map>
 #include <string>
 
+//skrivtilfil struktur ikke helt riktig!!
+
 using namespace std;
 
 Soner::Soner() {
@@ -57,7 +59,7 @@ void Soner::soneHandling(char valg) {
             switch (valg)
             {
             case 'N': nyOppdrag(iNr);          break;
-           //  case 'S': slettOppdrag();     break;
+            //case 'S': slettOppdrag();     break;
             case '1': hentEnOPPdrag();
 
             default: oppdragMeny();
@@ -163,10 +165,17 @@ void Soner::lesFraFil() {
 
 void Soner::hentEnsone()
 {
+
+    int tmp  = 0;
     int snNr = lesInt("Hvilken sone skal du se <nr>: ", 1, maxSoner);
-    auto it = gSoner.find(snNr);   // Iterator som leter etter sNr
-    if (it != gSoner.end()) {    // soneNummer ble  funnet
+    auto it = gSoner.find(snNr);            // Iterator som leter etter sNr
+    if (it != gSoner.end()) {               // soneNummer ble  funnet
         it->second->skrivEnSone(snNr);
+        tmp++;
+        if ((tmp % 5) == 0) {              //stans utskriften for hver 5.utskrift!
+            cout << "\n\n\tTrykk Paa ENTER for  fortsette";
+            cin.get();
+        }
     }
 }
     /* if (!gBoliger.empty()) {
@@ -217,6 +226,23 @@ void Soner::hjelpKAiSOner()
     int nr;
     gSoner[nr]->hjelpeKA();
 
+}
+
+void Soner::oppdragSlett(int nr)
+{
+  /* // int antall;
+    nr = lesInt("\tSlette/fjerne ALLE Kunde(er) med nummer:  ", 1, sisteSNr);
+
+  //  FINNER ANTALLET MED NAVNET:
+    antall = count(gBoliger.begin(), gBoliger.end(),
+        [nr](const auto& val) { return (val->hentID() == nr); });
+
+    if (antall > 0) {                        //  Gjenstand(er) ble funnet:
+        cout << "\n\tØnsker du VIRKELIG å slette/fjerne "
+            << ((antall > 1) ? "ALLE disse" : "denne");
+        if (lesChar(" (j/N)") == 'J') {      //  VIL slette alle:
+                                             //  AKTUELLE SLETTES:
+       */  
 }
 
 

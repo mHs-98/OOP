@@ -10,6 +10,7 @@
 #include "enum.h"
 #include "globaleFunskjoner.h"
 #include <string>
+#include <algorithm>
 
 extern Soner gsonene;
 //extern Bolig boliger;
@@ -74,7 +75,7 @@ void Sone::skrivData() {
 }
 
 /// @todo: Lage Bolig::skrevetPaa() i Bolig.h
-void Sone::skrivEnSone(int sNr) { // g gjennom boliger og skrive ut en bolig
+void Sone::skrivEnSone(int sNr) { // gaa gjennom boliger og skrive ut en bolig
    
     for (auto val : gBoliger) {
         val->skrivData();
@@ -107,26 +108,29 @@ void Sone::skrivEnSone(int sNr) { // g gjennom boliger og skrive ut en bolig
 
 void Sone::lagnyOppdrag(int nr)
 {
-    Bolig *nyBolig = nullptr;
- 
-     //boligtype type;
-   
-    //const Boligtype type = lesType();
+    Bolig* nyBolig = nullptr;
+
+
+
+    // const Boligtype type = lesType();
      char boligType;
+   // Boligtype boligType = ikkeSatt;
 
-    do {                                     //  Leser ALLTID 'A' eller 'S':
-        boligType = lesChar("\tL(eilighet) eller E(nebolig)");
-    } while (boligType != 'L' && boligType != 'E');
+     do {                                     //  Leser ALLTID 'A' eller 'S':
+           boligType = lesChar("\tL(eilighet) eller E(nebolig)");
+       } while (boligType != 'B' && boligType != 'E');
+      
+    
+        switch (boligType) {                    //  Lager en ny aktuell kjører:
+        case 'B':  nyBolig = new Bolig(nr);     break;
+        case 'E':  nyBolig = new Enebolig(nr);  break;
+        }
 
+        nyBolig->lesData();
+        gBoliger.push_back(nyBolig);//ny oppdraget legges bakerst i vektoren
    
-    switch (boligType) {                    //  Lager en ny aktuell kjører:
-    case 'L':  nyBolig = new Bolig(nr);     break;
-    case 'E':  nyBolig = new Enebolig(nr);  break;
-    }
-
-    nyBolig->lesData();
-    gBoliger.push_back(nyBolig);//ny oppdraget legges bakerst i vektoren
 }
+
 
 void Sone::enOppdrag(int nr)
 {
@@ -152,4 +156,50 @@ void Sone::hjelpeKA()
         val->skrivData();
     }
 }
+
+void Sone::slettEnOppdrag(int nr)
+{
+   /* int  antall = 0;                      //  Antall gjenstander med nr
+    antall = count(gBoliger.begin(), gBoliger.end(),
+        [nr](const auto& val) { return (val->hentID() == nr); });
+
+    if (antall > 0) {                        //  Gjenstand(er) ble funnet:
+        cout << "\n\tØnsker du VIRKELIG å slette/fjerne "
+            << ((antall > 1) ? "ALLE disse" : "denne");
+
+        if (lesChar(" (j/N)") == 'J') {      //  VIL slette alle:
+                                             //  AKTUELLE SLETTES:
+            gBoliger.erase(gBoliger.begin() + nr);
+        }
+    }
+    */
+    
+ /*   for (auto it = gBoliger.begin(); it != gBoliger.end(); ) {
+        if (*it==nr) {
+            it = c.erase(it);
+    int  antall = 0;                      //  Antall gjenstander med navnet.
+
+   //flytt den til Soner og bruk sisteSNr(det er oppdragsnumer) 
+    //nr = lesInt("\tSlette/fjerne ALLE Kunde(er) med nummer:  ", 1, );
+
+    //  FINNER ANTALLET MED NAVNET:
+    antall = count(gBoliger.begin(), gBoliger.end(),
+        [nr](const auto& val) { return (val->hentID() == nr); });
+
+    if (antall > 0) {                        //  Gjenstand(er) ble funnet:
+        cout << "\n\tØnsker du VIRKELIG å slette/fjerne "
+            << ((antall > 1) ? "ALLE disse" : "denne");
+        if (lesChar(" (j/N)") == 'J') {      //  VIL slette alle:
+                                             //  AKTUELLE SLETTES:
+            gBoliger.erase(gBoliger.begin() + nr);
+               // { return (val->hentID() == nr); });
+            cout << "\n\t" << antall << " oppdrag er slettet!"
+                << "\n\tDet er nå " << gBoliger.size()
+                << " oppdrag tilbake i listen.\n";
+        }
+        else
+            cout << "\n\tOK - ingen gjenstand har blitt slettet.\n";
+    }*/
+}
+
 
