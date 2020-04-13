@@ -49,7 +49,9 @@ void Sone::skrivTilFil(ofstream & ut)  {
         ut << unikSNr << "\t" << soneBeskrivelse << endl;
         ut << gBoliger.size() << endl;
    for (auto val : gBoliger) {
-        val->skrivTilFil(ut);
+       if (val != nullptr) {
+           val->skrivTilFil(ut);
+       }
     }
 }
 
@@ -159,6 +161,19 @@ void Sone::hjelpeKA()
 
 void Sone::slettEnOppdrag(int nr)
 {
+    int i=0;
+    for (auto it = gBoliger.begin(); it != gBoliger.end(); it++, i++) {
+        
+        if ((*it)->hentID() == nr) {
+            
+         delete(*it);
+         *it = NULL;
+        gBoliger.erase(it);
+       
+        return;
+    }
+    }
+
    /* int  antall = 0;                      //  Antall gjenstander med nr
     antall = count(gBoliger.begin(), gBoliger.end(),
         [nr](const auto& val) { return (val->hentID() == nr); });

@@ -10,6 +10,7 @@
 
 Enebolig::Enebolig(const int nr) : Bolig(nr) {
     areal = 0; festetomt = false;
+    boligType = enebolig;
 }
 
 void Enebolig::lesData() {

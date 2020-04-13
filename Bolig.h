@@ -31,11 +31,16 @@ private:
 		gateAdresse,				// gate + nr
 		postAdresse,				// postnumber + sted
 		boligBeskriv;				//		LATER
-	Boligtype boligType;
+	
+protected:
 
+	Boligtype boligType;
 public:
 	Bolig();
-	Bolig(const int nr) { oppdragsNr = nr; };
+	Bolig(const int nr) {
+		oppdragsNr = nr; 
+		boligType = bolig;
+	};
 	int		hentID() { return oppdragsNr; }
 	void	lesData();
 	void	skrivData() const;

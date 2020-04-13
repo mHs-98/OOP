@@ -58,8 +58,9 @@ void Soner::soneHandling(char valg) {
             valg = lesChar("\nValg: ");
             switch (valg)
             {
+
             case 'N': nyOppdrag(iNr);          break;
-            //case 'S': slettOppdrag();     break;
+            case 'S':  oppdragSlett(iNr);     break;
             case '1': hentEnOPPdrag();
 
             default: oppdragMeny();
@@ -230,6 +231,11 @@ void Soner::hjelpKAiSOner()
 
 void Soner::oppdragSlett(int nr)
 {
+    nr = lesInt("\tSlette/fjerne ALLE oppdrag(er) med nummer:  ", 1, sisteSNr);
+
+    for (auto val : gSoner) {
+        val.second->slettEnOppdrag(nr);
+    }
   /* // int antall;
     nr = lesInt("\tSlette/fjerne ALLE Kunde(er) med nummer:  ", 1, sisteSNr);
 
@@ -242,7 +248,9 @@ void Soner::oppdragSlett(int nr)
             << ((antall > 1) ? "ALLE disse" : "denne");
         if (lesChar(" (j/N)") == 'J') {      //  VIL slette alle:
                                              //  AKTUELLE SLETTES:
+
        */  
+
 }
 
 
@@ -260,6 +268,7 @@ bool Soner::finnes( int sNr) const      //hjelpefunsjon som sikrer at sonenummer
 
 void Soner::nyOppdrag(int& snNr)
 {
+    string temp;
         snNr = lesInt("Hvilken sone skal oppdraget opprettes i: ", 1, maxSoner);
         auto it = gSoner.find(snNr);   // Iterator som leter etter sNr
         if (it != gSoner.end()) {    // soneNummer ble  funnet
@@ -267,6 +276,7 @@ void Soner::nyOppdrag(int& snNr)
         }
         else                        // sonenummer eksisterer
             cout << "Duplikater tillates ikke!";
+        getline(cin, temp);
 }
 
 void Soner::oppdragMeny()
