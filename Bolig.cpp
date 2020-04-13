@@ -1,15 +1,6 @@
 /**
- *      Bolig klassens definisjon, inneholder blant annet:
- *          int’er: et unikt oppdrags-/bolignummer, dato innlagt i systemet
- *          (på formen ÅÅÅÅMMDD), byggeår, bruttoareal, antall soverom og angitt pris
- *          string‘er: navnet på den interne saksbehandleren hos eiendomsfirmaet,
- *          nåværende eiers navn, gateadresse (gate+nr), postadresse (nr+sted), og en smålang
- *          beskrivelse av boligen ellers (med slikt som: innhold, standard, beliggenhet,
- *          tomten, byggemåte, overtagelse, kommunikasjon, avgifter/omkostninger,
- *          skole/barnehage, fritidstilbud, ligningsverdi)
- *
  *      @file       BOLIG.CPP
- *      @author     Gruppe 12
+ *      @author     Gruppe 12 2020
  */
 
 #include "Bolig.h"
@@ -24,7 +15,9 @@
 
 using namespace std;
 
-
+/*
+*Initialeserer sine egne datamedlemmer
+*/
 Bolig::Bolig() {
     oppdragsNr      = 0;				
     byggeaar        = 0;

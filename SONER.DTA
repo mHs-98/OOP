@@ -1,41 +1,201 @@
-3
-1		Sone nummer 1
-2
+16
+1   sone nummer 1
+4
 1
-11012020
-1100
+12041978
+1300
 100
 10
-10
-Saksbehndler
-Eier
-Gate
-Post
-Beskrivelse av bolig 1
-B
-3
-14041444
-1500
-15
-5
-500
-Saksbehndler
+16000
+Saksbehandler
 Eier
 Gate
 Poststed
-Beskrivelse av bolig 3 som er BOlig/leigliihgwht
+Beskrivelse av oppdrag 1 i sone 1
 B
-2		Sone nummer 2
-1
 2
-12012020
-1200
-90
-9
-9
-Saksbehsndler
+12041978
+1300
+100
+10
+16000
+Saksbehandler
 Eier
 Gate
-Post
-Beskrivelse enebolig sone2
+Poststed
+Beskrivelse av oppdrag 2 i sone 1
+B
+3
+12041978
+1300
+100
+10
+16000
+Saksbehandler
+Eier
+Gate
+Poststed
+Beskrivelse av oppdrag 3 i sone 1
+E
+4
+12041978
+1300
+100
+10
+16000
+Saksbehandler
+Eier
+Gate
+Poststed
+Beskrivelse av oppdrag 4 i sone 1
+E
+2   Sone nummer 2
+4
+5
+12021978
+1300
+100
+10
+16000
+Saksbehandler
+Eier
+Gate
+Poststed
+Beskrivelse av oppdrag5 i sone 2
+B
+6
+12041978
+1300
+100
+10
+16000
+Saksbehandler
+Eier
+Gate
+Poststed
+Beskrivelse av oppdrag 4 i sone 2
+B
+7
+12041978
+1300
+100
+10
+16000
+Saksbehandler
+Eier
+Gate
+Poststed
+Beskrivelse av oppdrag 7 i sone 2
+E
+8
+12041978
+1300
+100
+10
+16000
+Saksbehandler
+Eier
+Gate
+Poststed
+Beskrivelse av oppdrag 8 i sone 2
+E
+11   Sone nummer 11
+4
+9
+12041978
+1300
+100
+10
+16000
+Saksbehandler
+Eier
+Gate
+Poststed
+Beskrivelse av oppdrag 9 i sone 11
+B
+10
+12041978
+1300
+100
+10
+16000
+Saksbehandler
+Eier
+Gate
+Poststed
+Beskrivelse av oppdrag 10 i sone 11
+B
+10
+12041978
+1300
+100
+10
+16000
+Saksbehandler
+Eier
+Gate
+Poststed
+Beskrivelse av oppdrag 11 i sone 11
+E
+12
+12041978
+1300
+100
+10
+16000
+Saksbehandler
+Eier
+Gate
+Poststed
+Beskrivelse av oppdrag 12 i sone 11
+E
+12   Sone nummer 12
+4
+13
+12041978
+1300
+100
+10
+16000
+Saksbehandler
+Eier
+Gate
+Poststed
+Beskrivelse av oppdrag 13 i sone 12
+B
+14
+12041978
+1300
+100
+10
+16000
+Saksbehandler
+Eier
+Gate
+Poststed
+Beskrivelse av oppdrag 14 i sone 12
+B
+15
+12041978
+1300
+100
+10
+16000
+Saksbehandler
+Eier
+Gate
+Poststed
+Beskrivelse av oppdrag 15 i sone 12
+E
+16
+12041978
+1300
+100
+10
+16000
+Saksbehandler
+Eier
+Gate
+Poststed
+Beskrivelse av oppdrag 16 i sone 12
 E

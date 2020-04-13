@@ -1,5 +1,9 @@
-﻿#define _CRT_SECURE_NO_WARNINGS
-
+﻿/**
+* @file      Kunde.cpp
+* @author    Gruppe 12, 2020, NTNU
+* 
+*/
+#define _CRT_SECURE_NO_WARNINGS
 #include<iostream>
 #include<fstream>
 #include "LesData3.h"
@@ -17,12 +21,17 @@ using namespace std;
 
 extern Soner gSonene;
 
-//class Kunde;
+/*
+*Initialiserer egne datamedlemmer
+*/
 Kunder::Kunder() {
  kundeListe = list<Kunde*>();
     sisteNr = 0;        ///første kunde må ha nr 1
 }
 
+/*
+* skriver meny/muligheter til skjermen
+*/
 void Kunder::skrivMeny(){
 
    cout  << "\tK N - NY Kunde\n"
@@ -35,6 +44,9 @@ void Kunder::skrivMeny(){
    
 }
 
+/*
+* Tilbyr brukern å velge de mange mulighetene klassen har oversikt over
+*/
  void Kunder::KundeHandling() {
     skrivMeny();
     char valg;
@@ -54,6 +66,12 @@ void Kunder::skrivMeny(){
         } valg = lesChar("\nvalg paa nytt eller 'Q'uit?");
     }
  }
+
+ /*
+ *Tilbyr brukern å legge til en ny kunde i butikken
+ *@ see Kunde::lesData()
+ *@ see Kunde::hentID()
+ */
 void Kunder::nyKunde() {
    // int nr;
     Kunde* kunden = new Kunde(++sisteNr);                   //kunde
@@ -64,6 +82,11 @@ void Kunder::nyKunde() {
         {  return (k1->hentID() < k2->hentID());  });
 }
 
+/*
+*Leser data fra fil
+*@ see Kunde::Kunde(...)
+*@
+*/
 void Kunder::lesFraFil() {      //leser kundens data fra fil
     cout << "\n\tLeser fra KUNDER.DTA\n";
     ifstream innfil("KUNDER.DTA"); 
@@ -84,7 +107,10 @@ void Kunder::lesFraFil() {      //leser kundens data fra fil
     }
 
 }
-
+/*
+*Skrive data fra fil
+*@ see Kunde::skrivTilFil(...)
+*/
  void Kunder::skrivTilFil() {
     ofstream ut("KUNDER.DTA");
     ut << sisteNr << '\n';
@@ -94,13 +120,19 @@ void Kunder::lesFraFil() {      //leser kundens data fra fil
     }
     cout << "\nSkriver til KUNDER.DTA\n";
 }
-
+/*
+*Skriver ut antall kunder til skjermen
+*/
  void Kunder::skrivHovedData()
  {
      cout << " \nSå mange kunder finnes\n\t" << sisteNr << '\n';
  }
 
-
+ /*
+ *Skrive ut all data om en spesifikk kunde
+ *@ see     Kunder::skrevetUtPaa(...)
+ *@ see     Kunde::skrivData()
+ */
  void Kunder::enKunde(int& nr)
  {
      
@@ -122,6 +154,10 @@ void Kunder::lesFraFil() {      //leser kundens data fra fil
      }
  }
 
+ /*
+ *bool funksjon som sjekker kundenummer eksisterr!
+ *@see      hentID()
+ */
  bool Kunder::skrevetUtPaa(const int pNr) const
  {
      for (const auto& val : kundeListe) {
@@ -130,7 +166,10 @@ void Kunder::lesFraFil() {      //leser kundens data fra fil
      }return false;
 
  }
-
+ /*
+ *Skriver alle kunder ut paa skjermen
+ *@see Kunde::skrivData()
+ */
  void Kunder::kundeSkrivAlt()
  {
      cout << "\n\tAlle " << kundeListe.size() << " hittil registrerte kundenavn:\n";
@@ -143,8 +182,13 @@ void Kunder::lesFraFil() {      //leser kundens data fra fil
          }
      }
 
- 
-
+ /*
+ *Tilbyr brukern å legge til/slette en sone fra en kunde's butikk
+ * @ see     Kunde::hentID()
+ * @ see     Kunde::skrivData()
+ * @ see     Kunde::soneEndre()
+ * @ see     Kunde::slettSone()
+ */
  void Kunder::endreKunder(int& nr)
  {
      nr = lesInt("Hvilken kunde skal endres", 1, sisteNr);
@@ -183,7 +227,12 @@ void Kunder::lesFraFil() {      //leser kundens data fra fil
 
      }
  }
- 
+
+
+ /*
+ *Tilbyr brukern muligheten til aa slette en kunde fra datastrukturen
+ *@ see     Kunde::hentID()
+ */
  void Kunder::slettKunde(int& nr)
  {
          //int nr;                           //  Navn til gjenstand(er) å slette.
@@ -195,7 +244,7 @@ void Kunder::lesFraFil() {      //leser kundens data fra fil
          antall = count_if(kundeListe.begin(), kundeListe.end(),
              [nr](const auto& val) { return (val->hentID() == nr); });
 
-         if (antall > 0) {                        //  Gjenstand(er) ble funnet:
+         if (antall > 0) {                        //  kunde ble funnet:
              cout << "\n\tØnsker du VIRKELIG å slette/fjerne "
                  << ((antall > 1) ? "ALLE disse" : "denne");
              if (lesChar(" (j/N)") == 'J') {      //  VIL slette alle:
@@ -211,22 +260,23 @@ void Kunder::lesFraFil() {      //leser kundens data fra fil
          }
      }
      
-
+/*
+* Skriver oversikt EN kunde til en hel egen fil
+* @see      Kunde::hentenKundoversikt(..)
+* @see      Kunde::hentID()
+*/
  void Kunder::kundeOversikt()
  {
      int nr;
      cout << "\nSaa mange kunder finnes:" << kundeListe.size();
-      nr = lesInt("Hvilken kunde vil du se:\n", 1,kundeListe.size());
-    
-   
-  
-    string filNavn = string("K") + to_string(nr) + string(".DTA");
+      nr = lesInt("Hvilken kunde vil du se:\n", 1,kundeListe.size());       //hent kundenummer fra brukern
+    string filNavn = string("K") + to_string(nr) + string(".DTA");          //lag unik filnavn ved aa lime sammen "K" og kundenummer!
 
-    ofstream ut(filNavn);
+    ofstream ut(filNavn);                                                   //åpner filet for skriving
 
-    for (auto val : kundeListe) {
-        if (val->hentID() == nr) {
-            val->hentenKundoversikt(ut);
+    for (auto val : kundeListe) {                                           //looper gjennom hele lista
+        if (val->hentID() == nr) {                                           //sjekker at kundenummer eksisterer
+            val->hentenKundoversikt(ut);                                    //sender info nedover og den funkjonen fullfører løpet videre!
         }
     }  cout << "\n****Se paa K+nr.dta!****\n";
  }

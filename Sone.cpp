@@ -1,3 +1,7 @@
+/**
+ *   @file      Sone.cpp
+ *   @author    Gruppe 12, NTNU 2020
+ */
 #include <iostream>
 #include <fstream>
 #include "LesData3.h"
@@ -34,7 +38,11 @@ Sone::Sone(int snr,  ifstream& in) {
             gBoliger.push_back(enBolig);
         }
 }
-
+/**
+ * Intialerer Eksempel Sone
+ *
+ * @param   nr - Sone Nr
+ */
 Sone::Sone(int nr) {
     unikSNr = nr;
     soneBeskrivelse = "Eksempel Beskrivelse";
@@ -42,9 +50,11 @@ Sone::Sone(int nr) {
 
 
 /**
- * 
- * 
- */ 
+**
+ * Skriver ut klassens innhold til filen
+ *@see      Bolig::skrivTilFil(...)
+ * @param   in - Filobjektet egne data leses inn fra
+ */
 void Sone::skrivTilFil(ofstream & ut)  {
         ut << unikSNr << " " << soneBeskrivelse << endl;
         ut << gBoliger.size() << endl;
@@ -54,29 +64,29 @@ void Sone::skrivTilFil(ofstream & ut)  {
        }
     }
 }
-
+/**
+ * Leser Sonens beskrivelse
+ */
 void Sone::lesBeskrivelse() {
     cout << "\n\nSkriv en kort beskrivelse om sonen: ";
     getline(cin, soneBeskrivelse); //Leser inn sonens beskrivelse
-
 }
 
+/**
+ * Skriver hver Sone sin data til skjerm
+ */
 void Sone::skrivData() {
-    //gp gjennm alle boliger og la hver bolig hente sin siz()
-    
-    ///Bolig bolig;
     cout << "\t";
     cout << "\n\tSone Nr: " << unikSNr
         << "\tBeskrivelse: " << soneBeskrivelse;
-    cout << " Saa mange boliger finnes:" << gBoliger.size();
-    
-    
-    /* bolig.skrivData();
-    cout << "\nnederst sone::skrivData()";
-    */
+    cout << "\n\tSaa mange boliger finnes:\t" << gBoliger.size() << '\n';
 }
 
-/// @todo: Lage Bolig::skrevetPaa() i Bolig.h
+/**
+*Går gjennom boliger i en Sone og skriver alt om dem
+*
+* @see     Boliger::skrivData()
+* */
 void Sone::skrivEnSone(int sNr) { // gaa gjennom boliger og skrive ut en bolig
    
     for (auto val : gBoliger) {
@@ -84,56 +94,42 @@ void Sone::skrivEnSone(int sNr) { // gaa gjennom boliger og skrive ut en bolig
     }
 }
 
-
-
-
-
-   /* if (!gBoliger.empty()) {
-        sNr = lesInt("Sone nr: ", 1, maxSoner);
-        for (const auto val : gBoliger) {
-            if (val->hentID->skrevetUtPaa(sNr)) {
-                val->hentID->skrivEnOppdrag(sNr);
-                if ( (sNr % 5) != 0) {
-                cout << "\n\n\tTrykk Paa ENTER for  fortsette";
-                cin.get();
-            }
-            }
-        }
-
-    }
-    else
-    {
-        cout << "\n\tIngen data av Soner fantes!\n\n";
-    }
-    
-}*/
+/**
+ * Lager ny oppdrag og legger den inn i datastrukturen
+ *
+ * @param   nr - Sone Nr
+ * @see      Bolig::Bolig(...)
+ * @see     Bolig::lesData()
+ * @see      Enebolig::Enebolig(...)
+ */
 
 void Sone::lagnyOppdrag(int nr)
 {
     Bolig* nyBolig = nullptr;
 
-
-
-    // const Boligtype type = lesType();
      char boligType;
-   // Boligtype boligType = ikkeSatt;
 
-     do {                                     //  Leser ALLTID 'A' eller 'S':
-           boligType = lesChar("\tL(eilighet) eller E(nebolig)");
+     do {                                     //  Leser ALLTID 'B' eller 'E':
+           boligType = lesChar("\tB(eilighet) eller E(nebolig)");
        } while (boligType != 'B' && boligType != 'E');
       
     
-        switch (boligType) {                    //  Lager en ny aktuell kjører:
+        switch (boligType) {                    //  Lager en ny aktuell ene/bolig:
         case 'B':  nyBolig = new Bolig(nr);     break;
         case 'E':  nyBolig = new Enebolig(nr);  break;
         }
 
-        nyBolig->lesData();
-        gBoliger.push_back(nyBolig);//ny oppdraget legges bakerst i vektoren
+        nyBolig->lesData();                 //hver oppdrag leser inn sin egen data
+        gBoliger.push_back(nyBolig);        //ny oppdraget legges bakerst i vektoren
    
 }
 
-
+/**
+*Går gjennom alle oppdrag og skriver en spesifikk oppdrags sin data
+* @see      Bolig::hentID()
+* @see      Bolig::skrivData()
+* @param   nr - Sone Nr
+* */
 void Sone::enOppdrag(int nr)
 {
     for (auto val : gBoliger) { //lop alle oppdragr
@@ -143,6 +139,12 @@ void Sone::enOppdrag(int nr)
 
 }
 
+/**
+ * Skriver en kunde sin Sone og boliger innhold
+ *
+ * @param   ut - ofstream referanse variable
+ * @see     Bolig::skrivTilFil()
+ */
 void Sone::enkundeoversikt(ofstream& ut)
 {
     
@@ -152,13 +154,13 @@ void Sone::enkundeoversikt(ofstream& ut)
 
 }
 
-void Sone::hjelpeKA()
-{
-    for (auto val : gBoliger) {
-        val->skrivData();
-    }
-}
 
+/**
+ * Sletter spesifikk oppdrag fra datastrukturen
+ *
+ * @param   nr - Sone Nr
+ * @see     Bolig::hentID()
+ */
 void Sone::slettEnOppdrag(int nr)
 {
     int i=0;
@@ -166,55 +168,15 @@ void Sone::slettEnOppdrag(int nr)
         
         if ((*it)->hentID() == nr) {
             
-         delete(*it);
-         *it = NULL;
-        gBoliger.erase(it);
+         delete(*it);            //slett selve pekern
+         *it = NULL;             //og sett den NULL(nullptr funket ikke! fikke read access vioalation)
+        gBoliger.erase(it);     //nå kan vi slette selve oppdraget!
        
         return;
     }
     }
 
-   /* int  antall = 0;                      //  Antall gjenstander med nr
-    antall = count(gBoliger.begin(), gBoliger.end(),
-        [nr](const auto& val) { return (val->hentID() == nr); });
-
-    if (antall > 0) {                        //  Gjenstand(er) ble funnet:
-        cout << "\n\tØnsker du VIRKELIG å slette/fjerne "
-            << ((antall > 1) ? "ALLE disse" : "denne");
-
-        if (lesChar(" (j/N)") == 'J') {      //  VIL slette alle:
-                                             //  AKTUELLE SLETTES:
-            gBoliger.erase(gBoliger.begin() + nr);
-        }
-    }
-    */
-    
- /*   for (auto it = gBoliger.begin(); it != gBoliger.end(); ) {
-        if (*it==nr) {
-            it = c.erase(it);
-    int  antall = 0;                      //  Antall gjenstander med navnet.
-
-   //flytt den til Soner og bruk sisteSNr(det er oppdragsnumer) 
-    //nr = lesInt("\tSlette/fjerne ALLE Kunde(er) med nummer:  ", 1, );
-
-    //  FINNER ANTALLET MED NAVNET:
-    antall = count(gBoliger.begin(), gBoliger.end(),
-        [nr](const auto& val) { return (val->hentID() == nr); });
-
-    if (antall > 0) {                        //  Gjenstand(er) ble funnet:
-        cout << "\n\tØnsker du VIRKELIG å slette/fjerne "
-            << ((antall > 1) ? "ALLE disse" : "denne");
-        if (lesChar(" (j/N)") == 'J') {      //  VIL slette alle:
-                                             //  AKTUELLE SLETTES:
-            gBoliger.erase(gBoliger.begin() + nr);
-               // { return (val->hentID() == nr); });
-            cout << "\n\t" << antall << " oppdrag er slettet!"
-                << "\n\tDet er nå " << gBoliger.size()
-                << " oppdrag tilbake i listen.\n";
-        }
-        else
-            cout << "\n\tOK - ingen gjenstand har blitt slettet.\n";
-    }*/
+  
 }
 
 

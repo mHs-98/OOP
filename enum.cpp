@@ -1,3 +1,7 @@
+/**
+* @file      Enum.CPP
+* @author    Gruppe 12, 2020
+* */
 #pragma once
 #ifndef __enum_H
 #define __enum_H

@@ -39,7 +39,6 @@ public:
     void lagnyOppdrag(int nr);
     void enOppdrag(int nr);
     void enkundeoversikt(std::ofstream& ut);
-    void hjelpeKA();
     void slettEnOppdrag(int nr);
 
 

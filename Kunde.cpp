@@ -1,7 +1,6 @@
-
 /**
  *   @file      Kunde.cpp
- *   @author    Gruppe 12, NTNU
+ *   @author    Gruppe 12,2020, NTNU
  */
 
 #include <iostream>
@@ -83,8 +82,6 @@ void Kunde::skrivTilFil(ofstream &utfil){
     utfil << vKunde.size() << endl;
     for (const auto& val : vKunde)          //  Skriver alle navnene til fil:
         utfil << val << '\n';
-
-
     switch (boligType) {
     case bolig: utfil << 'B' <<'\n';       break;
     case enebolig: utfil << 'E' << '\n';         break;
@@ -103,21 +100,17 @@ void Kunde::lesData() {
     cout << "\n\tAddresse + nr: ";         getline(cin, gate);
     cout << " \n\tPostaddresse + nr: ";    getline(cin, poststed);
     cout << "\n\t Mail: ";                 getline(cin, mail);
-    tlf = lesInt("Telefon Nr: ", 10000000, 99999999); ///8-sifrede telefon
+    tlf = lesInt("Telefon Nr: ", 10000000, 99999999);           //8-sifrede telefon
 
     do {
         soneNr = lesInt("Hvilken sone er du interessert initielt: ", 1, maxSoner);
-        if (gSonene.finnes(soneNr)) {               //sjekker at sonenummer virkelig fins
-            //vKunde.push_back(soneNr);               //legger bakerst i vectoren.
-        }
-        else cout << "Sonenummern finnnes ikke"
-            << "tast en sonemmuner mellom 1 og ";
+       
     } while (!gSonene.finnes(soneNr));
 
     vKunde.push_back(soneNr);               //legger sonenumeren inni 'DEN' kundens intersesone(vctor)
 
     
-    tegn = lesChar("\nSkrvi (B)olig eller (E)nebolig\n");
+    tegn = lesChar("\nSkrvi (B)olig eller (E)nebolig");
     switch (tegn)
     {
     case 'B': boligType = bolig;        break;
@@ -140,14 +133,8 @@ void Kunde::skrivData() {
   for (const int  &val : vKunde) {
        cout << val << " ";
    }
-  /* for (auto it = vKunde.begin(); it != vKunde.end(); it++)
-        cout << *it;     
 
-   //  'it' ER ALLER
-  /*  for (auto val : vKunde) {
-        cout <<'\n' << *val << '\n';*/
-    
-    switch (boligType) {
+  switch (boligType) {
     case bolig: cout << "\tBoligtype: Bolig" << '\n';       break;
     case enebolig: cout << "\tBoligtype: Enebolig" << '\n';         break;
     default: cout << "\nikkeSatt" << '\n';          break;
@@ -155,18 +142,30 @@ void Kunde::skrivData() {
 
 }
 
+/*
+*Hjelpefunkjon som returnere kundernummer
+*/
 int Kunde::hentID() {
     return kNr;
 }
-string Kunde::hentNavn() { return navn; }
+/*
+*Hjelpefunskjon som returnerer kundenavnet
+*/
+string Kunde::hentNavn() { 
+    return navn; 
+}
 
-
+/*
+*går gjennom alle kundene, og for hver kunde sjekkes om de er interesser det sonen
+*@ see Soner::soneforKOversikt(...)
+*@ see Soner::finnes(...)
+*/
 void Kunde::hentenKundoversikt(ofstream& ut)
 {
  
-    for (auto val : vKunde) {
-        if (gSonene.finnes(val)) {
-            gSonene.soneforKOversikt(val, ut);
+    for (auto val : vKunde) {                          //gaa gjennoom alle kundene
+        if (gSonene.finnes(val)) {                     //for hver kunde sjekk om de har vist interesse for sonen "val"
+            gSonene.soneforKOversikt(val, ut);         //kaller paa funksjonen som fullfører løpet videre!
 
         }
         else
@@ -177,35 +176,38 @@ void Kunde::hentenKundoversikt(ofstream& ut)
     }
 }
 
-
+/*
+*Tilbyr kunden å endre sonen altså legge til enda en sone til
+*@see   Soner::finnes(...)
+*
+*/
 void Kunde::soneEndre()
 {
     int soneNr;
     do {
         soneNr = lesInt("Hvilken sone er du interessert aa legge til: ", 1, maxSoner);
-         if (gSonene.finnes(soneNr)) {
-        vKunde.push_back(soneNr); ///ikke helt korrekt?? men egen varibel og bruk hjelpefunsjlon som henter soneNr fra Sone klassen??
-        //public hjelpesfundjon i sone som kalles på fra kund si n lesdata().
-          }//
-      //  else cout << "Sonenummern finnnes ikke"
-          //  << "tast en sonemmuner mellom 1 og ";
-         cout << gSonene.finnes(soneNr);
-     } while (!gSonene.finnes(soneNr));
-     cout << "\nut av while\n";
-}
+      
+    } while (!gSonene.finnes(soneNr));      //sikrer at sonen faktisk finnes/eksisterer
+    vKunde.push_back(soneNr);               //legger sonen inni DEN kundens butikk!
+    }
+
+
+/*
+*Sletter sone fra en Kunde's butikk
+*@see       Soner::finnes(...)
+*/
 void Kunde::slettSone()
 {
 
     int soneNr;
     do {
         soneNr = lesInt("Hvilken sone er du interessert aa legge til: ", 1, maxSoner);
-        if (gSonene.finnes(soneNr)) {//sjekker at sonenummer virkelig finnes
-            cout << "\netter if\n";
-            auto it = vKunde.begin(); //gaar gjennom vektoren
+        if (gSonene.finnes(soneNr)) {           //sjekker at sonenummer virkelig finnes
+            auto it = vKunde.begin();           //gaar gjennom vektoren
             cout << "\nforan while\n";
             while (it != vKunde.end())
             {
-                if (*it == soneNr)      //peker paa sonenummer som skal slettes
+                if (*it == soneNr)      //peker paa riktig sonenummer som skal slettes
                 {
                     vKunde.erase(it);   //sletter den!
 
