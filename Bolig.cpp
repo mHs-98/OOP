@@ -1,15 +1,17 @@
 /**
- *Bolig klassens definisjon, inneholder blant annet:
- *int’er: et unikt oppdrags-/bolignummer, dato innlagt i systemet
- *(på formen ÅÅÅÅMMDD), byggeår, bruttoareal, antall soverom og angitt pris
- *string‘er: navnet på den interne saksbehandleren hos eiendomsfirmaet,
- *nåværende eiers navn, gateadresse (gate+nr), postadresse (nr+sted), og en smålang
- *beskrivelse av boligen ellers (med slikt som: innhold, standard, beliggenhet,
- *tomten, byggemåte, overtagelse, kommunikasjon, avgifter/omkostninger,
- *skole/barnehage, fritidstilbud, ligningsverdi)
- *   @file      BOLIG.CPP
- *   @author    Abdisalan M. Hussein
+ *      Bolig klassens definisjon, inneholder blant annet:
+ *          int’er: et unikt oppdrags-/bolignummer, dato innlagt i systemet
+ *          (på formen ÅÅÅÅMMDD), byggeår, bruttoareal, antall soverom og angitt pris
+ *          string‘er: navnet på den interne saksbehandleren hos eiendomsfirmaet,
+ *          nåværende eiers navn, gateadresse (gate+nr), postadresse (nr+sted), og en smålang
+ *          beskrivelse av boligen ellers (med slikt som: innhold, standard, beliggenhet,
+ *          tomten, byggemåte, overtagelse, kommunikasjon, avgifter/omkostninger,
+ *          skole/barnehage, fritidstilbud, ligningsverdi)
+ *
+ *      @file       BOLIG.CPP
+ *      @author     Gruppe 12
  */
+
 #include "Bolig.h"
 #include "Enebolig.h"
 #include "LesData3.h"
@@ -19,8 +21,8 @@
 #include <fstream>
 #include <string>
 #include "globaleFunskjoner.h"
-using namespace std;
 
+using namespace std;
 
 
 Bolig::Bolig() {
@@ -29,7 +31,6 @@ Bolig::Bolig() {
     bruttoAreal     = 0;
     antallSoverom   = 0;
     angittPris      = 0;
-   // boligType       = ikkeSatt;
 } 
 
 /**
@@ -37,38 +38,37 @@ Bolig::Bolig() {
 */
 void Bolig::lesData() {
 
-    innlagtDato = lesInt("Inlagt dato:\t", 10000000, 99999999);        // dato på format ÅÅÅÅMMDD altså 8-siffer!
-    byggeaar = lesInt("Byggeår:\t", 1000, 2020);                       //byggeår fra år 1000 til 2020 i vår tid!
-    bruttoAreal = lesInt("Brutto Areal:\t", 1, 100);                   //resten er selvforklarende viljeg håpe!
-    antallSoverom = lesInt("Antall soverom:\t", 1, 10);
-    angittPris = lesInt("Angitt pris:\t", 1, 900000);
-    cout << "Navn paa Sakbehandler:\n";
+    innlagtDato = lesInt("\nInlagt dato:\t", 10000000, 99999999);        // dato på format ÅÅÅÅMMDD altså 8-siffer!
+    byggeaar = lesInt("\nByggeår:\t", 1000, 2020);                       //byggeår fra år 1000 til 2020 i vår tid!
+    bruttoAreal = lesInt("\nBrutto Areal:\t", 1, 100);                   //resten er selvforklarende viljeg håpe!
+    antallSoverom = lesInt("\nAntall soverom:\t", 1, 10);
+    angittPris = lesInt("\nAngitt pris:\t", 1, 900000);
+    cout << "\nNavn paa Sakbehandler: ";
     getline(cin, navnsaksb);
-    cout << "\nNavn paa eier:\n";
+    cout << "\nNavn paa eier: ";
     getline(cin, navnEier);
-    cout << "\nNavn paa gateadresse: \n";
+    cout << "\nNavn paa gateadresse: ";
     getline(cin, gateAdresse);
-    cout << "\nNavn paa poststed: \n";
+    cout << "\nNavn paa poststed: ";
     getline(cin, postAdresse);
-    cout << "Bolig beskrivelse:\t";
+    cout << "\nBolig beskrivelse: ";
     getline(cin, boligBeskriv);
 }
 
 /**
- *Skriver ut ALLE egne data på skjermen.
+*   Skriver ut ALLE egne data på skjermen.
 */
 void Bolig::skrivData() const {
     cout << "\nOppdragsNr:\t " << oppdragsNr << '\n';
-    cout << "BoligType:\t";
-    switch (boligType) {
-    case bolig: cout << "Bolig\n";       break;
-    case enebolig: cout << "Enebolig\n";         break;
-    }
+    cout << "\nBoligType: \t"; 
+        switch (boligType) {
+        case bolig: cout << "Bolig\n";          break;
+        case enebolig: cout << "Enebolig\n";    break;
+        }
     cout << "\nInnlagt Dato:\t " << innlagtDato << '\n';
-    cout << "Bygge år:\t " << byggeaar << '\n';
-    cout << "Anall Soverom:\t " << antallSoverom << '\n';
-    cout << "Bolig Beskrivelse:\t " << boligBeskriv << '\n';
-    cout << "\nnederst bolig::skrivdata()\n";
+    cout << "\nBygge år:\t " << byggeaar << '\n';
+    cout << "\nAnall Soverom:\t " << antallSoverom << '\n';
+    cout << "\nBolig Beskrivelse:\t " << boligBeskriv << '\n';
 }
 
 /**
