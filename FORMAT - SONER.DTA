@@ -1,4 +1,15 @@
-<sisteSNr>
-<soneNr>
-<soneBeskrivelse>
-<boligtype>
+<sisteoppdragsnummer>
+<soneNr>	<soneBeskrivelse>
+<antall oppdrag i (DENNE) sonen>
+<oppdragnummer>
+<inlag dato>
+<bygget aar>
+<areal>
+<ant. soverom>
+<pris>
+<Saksbehdler>
+<Eier>
+<gate>
+<Sted>
+<Beskrivelse>
+<Boligtype (B)olig/(E)nebolig>

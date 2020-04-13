@@ -65,7 +65,7 @@ void Kunder::nyKunde() {
 }
 
 void Kunder::lesFraFil() {      //leser kundens data fra fil
-    cout << "\nLeser fra KUNDER.DTA\n";
+    cout << "\n\tLeser fra KUNDER.DTA\n";
     ifstream innfil("KUNDER.DTA"); 
     Kunde* kunden;      ///hjepe-variabler
     int kundeNr;
@@ -92,6 +92,7 @@ void Kunder::lesFraFil() {      //leser kundens data fra fil
     {
         val->skrivTilFil(ut);
     }
+    cout << "\nSkriver til KUNDER.DTA\n";
 }
 
  void Kunder::skrivHovedData()
@@ -213,10 +214,11 @@ void Kunder::lesFraFil() {      //leser kundens data fra fil
 
  void Kunder::kundeOversikt()
  {
-     cout << "\ninni kunder::kundeoversikt()\n";
+     int nr;
+     cout << "\nSaa mange kunder finnes:" << kundeListe.size();
+      nr = lesInt("Hvilken kunde vil du se:\n", 1,kundeListe.size());
     
-    int nr;
-    cin >> nr;
+   
   
     string filNavn = string("K") + to_string(nr) + string(".DTA");
 
@@ -226,7 +228,7 @@ void Kunder::lesFraFil() {      //leser kundens data fra fil
         if (val->hentID() == nr) {
             val->hentenKundoversikt(ut);
         }
-    }  
+    }  cout << "\n****Se paa K+nr.dta!****\n";
  }
 
  

@@ -1,4 +1,9 @@
 
+/**
+ *   @file      Kunde.cpp
+ *   @author    Gruppe 12, NTNU
+ */
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -15,25 +20,41 @@
 extern Soner gSonene;
 using namespace std;
 
+
 Kunde::Kunde() { cout << "Burde aldri komme opp!";}
+/**
+ * Constructor initialiserer kunde datastrukturen
+ */
+
 Kunde::Kunde(int nr) {
 
     kNr = nr;
     tlf = 0;
 }
+/**
+ * Leser kunde sin data fra filen
+ *
+ * @param   inn - ifstream referanse variable
+ * @file    'KUNDER.DTA'
+ */
+
 Kunde::Kunde(ifstream &inn, int nr) {
     char tegn;
+    int sonenummer;
+    int antall = 0;
     kNr = nr; inn.ignore();
     getline(inn, navn);
     inn >> tlf; inn.ignore();
     getline(inn, mail);
     getline(inn, gate);
     getline(inn, poststed);
-   /* for (auto val : vKunde) {
-        val->
+    inn >> antall;
+    for (int i = 1; i <= antall; i++) {  //  Leser disse navnene:
+        inn >> sonenummer;
+        vKunde.push_back(sonenummer);             //  Legger BAKERST i vectoren.
     }
-   // type = lesType();*/
-    inn >> tegn;
+  
+    inn >> tegn;        //hjelpevariabel
     switch (tegn)
     {
     case 'B': boligType = bolig;        break;
@@ -44,6 +65,13 @@ Kunde::Kunde(ifstream &inn, int nr) {
 
 }   
 
+/**
+ * Skriver Kunde sin data ut til filen
+ *
+ * @param   ut - ofstream referanse variable
+ * @file    'KUNDER.DTA'
+ */
+
 void Kunde::skrivTilFil(ofstream &utfil){
     
     utfil << kNr        << endl; 
@@ -52,7 +80,11 @@ void Kunde::skrivTilFil(ofstream &utfil){
     utfil << mail       << endl;
     utfil << gate       << endl;
     utfil << poststed    << endl;
-   
+    utfil << vKunde.size() << endl;
+    for (const auto& val : vKunde)          //  Skriver alle navnene til fil:
+        utfil << val << '\n';
+
+
     switch (boligType) {
     case bolig: utfil << 'B' <<'\n';       break;
     case enebolig: utfil << 'E' << '\n';         break;
@@ -61,19 +93,9 @@ void Kunde::skrivTilFil(ofstream &utfil){
 
 }
 
-//trenger egenltig ike!
-/*void  Kunde::lesFraFil() {
-    ifstream inn("KUNDER.DTA");
-    if (inn)        /// sjekker filen åpen/eksisterer
-    {
-        cout << "Leser fra kunder.dta...";
-        inn >> kNr; inn.ignore(); getline(inn, navn); inn >> tlf; inn.ignore();
-        getline(inn, mail); getline(inn, gate); getline(inn, poststed); inn.ignore();
-    }
-}*/
-
-
-
+/**
+ * Leser inn kunde sin data fra brukeren/tastaturet
+ */
 void Kunde::lesData() {
     int soneNr;
     char tegn;
@@ -85,17 +107,17 @@ void Kunde::lesData() {
 
     do {
         soneNr = lesInt("Hvilken sone er du interessert initielt: ", 1, maxSoner);
-        if (gSonene.finnes(soneNr)) {       //sjekker at sonenummer virkelig fins
-            vKunde.push_back(soneNr);       //legger bakerst i vectoren.
+        if (gSonene.finnes(soneNr)) {               //sjekker at sonenummer virkelig fins
+            //vKunde.push_back(soneNr);               //legger bakerst i vectoren.
         }
         else cout << "Sonenummern finnnes ikke"
             << "tast en sonemmuner mellom 1 og ";
     } while (!gSonene.finnes(soneNr));
 
-    vKunde.push_back(soneNr);
+    vKunde.push_back(soneNr);               //legger sonenumeren inni 'DEN' kundens intersesone(vctor)
 
     
-    tegn = lesChar("\nSkrvi B eller E\n");
+    tegn = lesChar("\nSkrvi (B)olig eller (E)nebolig\n");
     switch (tegn)
     {
     case 'B': boligType = bolig;        break;
@@ -103,27 +125,32 @@ void Kunde::lesData() {
     default: boligType = ikkeSatt;      break;
         break;
     }
-
-
-   // type = lesType();
 }
 
- 
+/**
+ * Skriver Kundens data til skjermen
+ */
 void Kunde::skrivData() {
-   // Kunder tmpkunder;       ///gjør akkurat hva den sier
-   // tmpkunder.skrivHovedData();
-   
-    cout << "\n Navn:" << navn << ' '
-        << "\nKundenr:" << kNr << ' '
+ 
+   cout << "\nKundenr:" << kNr << ' '
+    << "\n Navn:" << navn << ' '
         << tlf << ' ' << mail << ' '
         << gate << ' ' << poststed << '\n';
-    for (auto val : vKunde) {
-        cout << val;
-    }
+   cout << " \tInteresserte Soner:\t ";
+  for (const int  &val : vKunde) {
+       cout << val << " ";
+   }
+  /* for (auto it = vKunde.begin(); it != vKunde.end(); it++)
+        cout << *it;     
+
+   //  'it' ER ALLER
+  /*  for (auto val : vKunde) {
+        cout <<'\n' << *val << '\n';*/
+    
     switch (boligType) {
-    case bolig: cout << "Bolig" << '\n';       break;
-    case enebolig: cout << "Enebolig" << '\n';         break;
-    default: cout << "ikkeSatt" << '\n';          break;
+    case bolig: cout << "\tBoligtype: Bolig" << '\n';       break;
+    case enebolig: cout << "\tBoligtype: Enebolig" << '\n';         break;
+    default: cout << "\nikkeSatt" << '\n';          break;
     }
 
 }
@@ -136,7 +163,7 @@ string Kunde::hentNavn() { return navn; }
 
 void Kunde::hentenKundoversikt(ofstream& ut)
 {
-    cout << "\ninni kunde::hentekundeoverskit()\n";
+ 
     for (auto val : vKunde) {
         if (gSonene.finnes(val)) {
             gSonene.soneforKOversikt(val, ut);

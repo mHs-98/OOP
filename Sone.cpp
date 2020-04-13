@@ -46,11 +46,11 @@ Sone::Sone(int nr) {
  * 
  */ 
 void Sone::skrivTilFil(ofstream & ut)  {
-        ut << unikSNr << "\t" << soneBeskrivelse << endl;
+        ut << unikSNr << " " << soneBeskrivelse << endl;
         ut << gBoliger.size() << endl;
    for (auto val : gBoliger) {
-       if (val != nullptr) {
-           val->skrivTilFil(ut);
+       if (val != nullptr) {            //hvis oppdrag ikke tom (ekstra viktig for at slett oppdrag skal funke ellers blir read-violation access!)
+           val->skrivTilFil(ut);        //be om aa skrive seg til fil!
        }
     }
 }
