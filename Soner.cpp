@@ -182,18 +182,12 @@ void Soner::lesFraFil() {
  */
 void Soner::hentEnsone()
 {
-
-    int tmp  = 0;
     int snNr = lesInt("Hvilken sone skal du se <nr>: ", 1, maxSoner);
     auto it = gSoner.find(snNr);            // Iterator som leter etter sNr
     if (it != gSoner.end()) {               // soneNummer ble  funnet
         it->second->skrivEnSone(snNr);
-        tmp++;
-        if ((tmp % 5) == 0) {              //stans utskriften for hver 5.utskrift!
-            cout << "\n\n\tTrykk Paa ENTER for  fortsette";
-            cin.get();
-        }
-    }  else
+    }
+    else
     {
         cout << "\n\tIngen data av Soner fantes!\n\n";
     }

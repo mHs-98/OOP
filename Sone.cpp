@@ -88,11 +88,19 @@ void Sone::skrivData() {
 * @see     Boliger::skrivData()
 * */
 void Sone::skrivEnSone(int sNr) { // gaa gjennom boliger og skrive ut en bolig
-   
+
+    int tmp = 0;
     for (auto val : gBoliger) {
         val->skrivData();
+        tmp++;
+        if ((tmp % 5) == 0) {              //stans utskriften for hver 5.utskrift!
+            cout << "\n\n\tTrykk Paa ENTER for  fortsette";
+            cin.get();
+        }
     }
 }
+    
+
 
 /**
  * Lager ny oppdrag og legger den inn i datastrukturen
@@ -163,20 +171,24 @@ void Sone::enkundeoversikt(ofstream& ut)
  */
 void Sone::slettEnOppdrag(int nr)
 {
-    int i=0;
+    int i = 0;
     for (auto it = gBoliger.begin(); it != gBoliger.end(); it++, i++) {
-        
-        if ((*it)->hentID() == nr) {
-            
-         delete(*it);            //slett selve pekern
-         *it = NULL;             //og sett den NULL(nullptr funket ikke! fikke read access vioalation)
-        gBoliger.erase(it);     //nå kan vi slette selve oppdraget!
-       
-        return;
-    }
-    }
 
-  
+        if ((*it)->hentID() == nr) {
+            cout << "\n\tØnsker du VIRKELIG å slette/fjerne "
+                << "ALLE disse denne";
+            if (lesChar(" (j/N)") == 'J') {      //  VIL slette alle:
+
+                delete(*it);            //slett selve pekern
+                *it = NULL;             //og sett den NULL(nullptr funket ikke! fikke read access vioalation)
+                gBoliger.erase(it);     //nå kan vi slette selve oppdraget!
+
+                return;
+            }
+        }
+
+
+    }
 }
 
 
